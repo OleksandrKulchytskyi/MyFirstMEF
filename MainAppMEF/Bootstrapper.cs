@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition.Hosting;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel.Composition.Hosting;
 using System.Windows;
 
 namespace MainAppMEF
 {
-	class Bootstrapper : Microsoft.Practices.Prism.MefExtensions.MefBootstrapper
+	internal class Bootstrapper : Microsoft.Practices.Prism.MefExtensions.MefBootstrapper
 	{
 		protected override System.Windows.DependencyObject CreateShell()
 		{

@@ -1,12 +1,9 @@
 ﻿using Microsoft.Practices.Prism.Modularity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ModuleB
 {
 	[Module(ModuleName = "ModuleB", OnDemand = true)]
+	//[ModuleDependency("")] // add some dependency to another modules.
 	public class ModuleBModule : IModule
 	{
 		public void Initialize()

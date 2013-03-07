@@ -1,8 +1,4 @@
 ﻿using Microsoft.Practices.Prism.Regions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -26,6 +22,7 @@ namespace FirstPrismApp.Infrastructure
 						regionTarget.Children.Add(element);
 					}
 				}
+
 				//handle remove
 				if (args.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
 				{

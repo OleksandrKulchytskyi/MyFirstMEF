@@ -5,6 +5,7 @@ using Microsoft.Practices.Unity;
 
 namespace ModuleA
 {
+	[Module(ModuleName = "ModuleA", OnDemand = true)]
 	public class ModuleA : IModule
 	{
 		private IUnityContainer _container;
@@ -23,7 +24,6 @@ namespace ModuleA
 			region.Add(_container.Resolve<ToolbarView>());
 			region.Add(_container.Resolve<ToolbarView>());
 			region.Add(_container.Resolve<ToolbarView>());
-
 
 			//_regionManager.RegisterViewWithRegion(RegionConstants.ToolbarRegion, typeof(ToolbarView));
 			_regionManager.RegisterViewWithRegion(RegionConstants.ContentRegion, typeof(ContentView));

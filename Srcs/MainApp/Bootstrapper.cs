@@ -4,9 +4,6 @@ using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -26,21 +23,20 @@ namespace MainApp
 			App.Current.MainWindow.Show();
 		}
 
-		protected override void ConfigureModuleCatalog()
-		{
-			base.ConfigureModuleCatalog();
-			ModuleCatalog moduleCatalog = (ModuleCatalog)this.ModuleCatalog;
-			moduleCatalog.AddModule(typeof(ModuleA.ModuleA));
+		//protected override void ConfigureModuleCatalog()
+		//{
+		//	base.ConfigureModuleCatalog();
+		//	ModuleCatalog moduleCatalog = (ModuleCatalog)this.ModuleCatalog;
+		//	moduleCatalog.AddModule(typeof(ModuleA.ModuleA));
 
-			Type mduleBType = typeof(ModuleB.ModuleBModule);
-			ModuleCatalog.AddModule(new ModuleInfo()
-			{
-
-				ModuleName = mduleBType.Name,
-				ModuleType = mduleBType.AssemblyQualifiedName,
-				InitializationMode = InitializationMode.WhenAvailable
-			});
-		}
+		//	Type mduleBType = typeof(ModuleB.ModuleBModule);
+		//	ModuleCatalog.AddModule(new ModuleInfo()
+		//	{
+		//		ModuleName = mduleBType.Name,
+		//		ModuleType = mduleBType.AssemblyQualifiedName,
+		//		InitializationMode = InitializationMode.WhenAvailable
+		//	});
+		//}
 
 		protected override Microsoft.Practices.Prism.Regions.RegionAdapterMappings ConfigureRegionAdapterMappings()
 		{
@@ -52,7 +48,8 @@ namespace MainApp
 		protected override IModuleCatalog CreateModuleCatalog()
 		{
 			//var cat= base.CreateModuleCatalog();
-			return new DirectoryModuleCatalog() { ModulePath = @".\Modules" };
+			//return new DirectoryModuleCatalog() { ModulePath = @".\Modules" };
+			return Microsoft.Practices.Prism.Modularity.ModuleCatalog.CreateFromXaml(new Uri("/MainApp;component/XamlCatalog.xaml", UriKind.Relative));
 		}
 	}
 }

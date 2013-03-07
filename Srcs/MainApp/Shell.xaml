@@ -3,12 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://www.codeplex.com/prism"
         xmlns:inf="clr-namespace:FirstPrismApp.Infrastructure;assembly=FirstPrismApp.Infrastructure"
-        Title="Shell" >
+        Title="Shell">
     <DockPanel LastChildFill="True">
-        <!--<ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ToolbarRegion}"/>-->
-        <!--<ItemsControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ToolbarRegion}"/>-->
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ToolbarRegion}"/>
-        <ContentControl prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ContentRegion}"/>
-        
+        <!--<ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ToolbarRegion}" />-->
+        <!--<ItemsControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ToolbarRegion}" />-->
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ToolbarRegion}" />
+        <ContentControl prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ContentRegion}" />
     </DockPanel>
 </Window>
