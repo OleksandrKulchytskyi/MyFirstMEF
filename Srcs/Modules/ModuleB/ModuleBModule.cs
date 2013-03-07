@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Prism.Modularity;
+using System.Windows;
 
 namespace ModuleB
 {
@@ -8,7 +9,7 @@ namespace ModuleB
 	{
 		public void Initialize()
 		{
-			//throw new NotImplementedException();
+			MessageBox.Show("ModuleB is loaded");
 		}
 	}
 }

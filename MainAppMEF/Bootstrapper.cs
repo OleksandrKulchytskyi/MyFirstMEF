@@ -21,6 +21,7 @@ namespace MainAppMEF
 		{
 			base.ConfigureAggregateCatalog();
 			AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Bootstrapper).Assembly));
+			AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(MefModuleA.MefModuleA).Assembly));
 		}
 	}
 }

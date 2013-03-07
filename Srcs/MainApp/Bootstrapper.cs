@@ -48,8 +48,10 @@ namespace MainApp
 		protected override IModuleCatalog CreateModuleCatalog()
 		{
 			//var cat= base.CreateModuleCatalog();
-			//return new DirectoryModuleCatalog() { ModulePath = @".\Modules" };
-			return Microsoft.Practices.Prism.Modularity.ModuleCatalog.CreateFromXaml(new Uri("/MainApp;component/XamlCatalog.xaml", UriKind.Relative));
+			//return new DirectoryModuleCatalog() { ModulePath = @".\Modules" }; //to load modules from directory
+			//return Microsoft.Practices.Prism.Modularity.ModuleCatalog.CreateFromXaml(new Uri("/MainApp;component/XamlCatalog.xaml", UriKind.Relative));//to load modules from xaml file
+
+			return new ConfigurationModuleCatalog();
 		}
 	}
 }
