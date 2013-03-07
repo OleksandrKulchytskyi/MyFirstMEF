@@ -101,6 +101,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Srcs\FirstPrismApp.Infrastructure\FirstPrismApp.Infrastructure.csproj">
+      <Project>{cc00fb09-42cf-4290-87d9-b9893456acf4}</Project>
+      <Name>FirstPrismApp.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Srcs\Modules\MefModuleA\MefModuleA.csproj">
       <Project>{f4b4e60f-6654-42bf-b988-c533b82ef36c}</Project>
       <Name>MefModuleA</Name>

@@ -59,6 +59,9 @@
     <Compile Include="ContentView.xaml.cs">
       <DependentUpon>ContentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ContentViewViewModel.cs" />
+    <Compile Include="IContentAView.cs" />
+    <Compile Include="IContentViewViewModel.cs" />
     <Compile Include="ModuleA.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

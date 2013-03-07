@@ -6,6 +6,6 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Background="AntiqueWhite">
-        <TextBlock Text="Content" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <TextBlock Text="{Binding Message}" VerticalAlignment="Center" HorizontalAlignment="Center" />
     </Grid>
 </UserControl>

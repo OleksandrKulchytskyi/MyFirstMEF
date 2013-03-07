@@ -8,6 +8,7 @@
         <!--<ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ToolbarRegion}" />-->
         <!--<ItemsControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ToolbarRegion}" />-->
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ToolbarRegion}" />
-        <ContentControl prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ContentRegion}" />
+        <!--<ContentControl prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ContentRegion}" />-->
+        <ItemsControl prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ContentRegion}" />
     </DockPanel>
 </Window>
