@@ -38,5 +38,6 @@ namespace FirstPrismApp.Infrastructure
 		{
 			return new AllActiveRegion();
 		}
+
 	}
 }

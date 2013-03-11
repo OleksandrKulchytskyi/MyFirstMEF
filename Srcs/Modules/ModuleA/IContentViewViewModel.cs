@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ModuleA
 {
-	public interface IContentViewViewModel:IViewModel
+	public interface IContentViewViewModel : IViewModel
 	{
 		string Message { get; set; }
 	}

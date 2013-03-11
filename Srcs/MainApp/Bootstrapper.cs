@@ -38,6 +38,12 @@ namespace MainApp
 		//	});
 		//}
 
+		protected override void InitializeModules()
+		{
+			base.InitializeModules();
+			Loader loader = new Loader(Container);
+		}
+
 		protected override Microsoft.Practices.Prism.Regions.RegionAdapterMappings ConfigureRegionAdapterMappings()
 		{
 			RegionAdapterMappings mappings = base.ConfigureRegionAdapterMappings();
@@ -47,7 +53,6 @@ namespace MainApp
 
 		protected override IModuleCatalog CreateModuleCatalog()
 		{
-			//var cat= base.CreateModuleCatalog();
 			//return new DirectoryModuleCatalog() { ModulePath = @".\Modules" }; //to load modules from directory
 			//return Microsoft.Practices.Prism.Modularity.ModuleCatalog.CreateFromXaml(new Uri("/MainApp;component/XamlCatalog.xaml", UriKind.Relative));//to load modules from xaml file
 

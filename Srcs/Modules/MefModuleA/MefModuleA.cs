@@ -27,7 +27,7 @@ namespace MefModuleA
 			var toolbarViewInst = ServiceLocator.Current.GetInstance<ToolbarView>();
 			var contViewInst = ServiceLocator.Current.GetInstance<ContentView>();
 			_region.Regions[FirstPrismApp.Infrastructure.RegionConstants.ToolbarRegion].Add(toolbarViewInst);
-			_region.Regions[FirstPrismApp.Infrastructure.RegionConstants.ContentRegion].Add(contViewInst);
+			_region.Regions[FirstPrismApp.Infrastructure.RegionConstants.ItemsRegion].Add(contViewInst);
 			MessageBox.Show("MefModuleA is loaded.");
 		}
 	}

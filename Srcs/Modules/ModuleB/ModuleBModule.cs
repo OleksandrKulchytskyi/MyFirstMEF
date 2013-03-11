@@ -24,7 +24,7 @@ namespace ModuleB
 			_container.RegisterType<ToolbarView>();
 			_container.RegisterType<IContentViewViewModel, ContentViewViewMode>();
 
-			_regionManager.RegisterViewWithRegion(FirstPrismApp.Infrastructure.RegionConstants.ContentRegion, typeof(ContentView));
+			_regionManager.RegisterViewWithRegion(FirstPrismApp.Infrastructure.RegionConstants.ItemsRegion, typeof(ContentView));
 
 			MessageBox.Show("ModuleB is loaded");
 		}

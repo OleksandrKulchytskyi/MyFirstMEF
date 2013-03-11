@@ -50,8 +50,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IView.cs" />
-    <Compile Include="IViewModel.cs" />
+    <Compile Include="CommandManager.cs" />
+    <Compile Include="Base\IView.cs" />
+    <Compile Include="Base\IViewModel.cs" />
+    <Compile Include="Events\DocumentLoadedEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -66,8 +68,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="RegionConstants.cs" />
+    <Compile Include="Services\IOpenFileService.cs" />
     <Compile Include="StackPanelRegionAdapter.cs" />
-    <Compile Include="ViewModelBase.cs" />
+    <Compile Include="Base\ViewModelBase.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -77,6 +80,12 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Business\Business.Common\Business.Common.csproj">
+      <Project>{e946bbbb-8994-4ae8-8867-c2f689b64449}</Project>
+      <Name>Business.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
