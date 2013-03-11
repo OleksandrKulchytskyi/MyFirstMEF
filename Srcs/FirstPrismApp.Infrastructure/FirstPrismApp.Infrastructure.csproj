@@ -35,6 +35,9 @@
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\..\Libs\Prism\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.Unity">
+      <HintPath>..\..\Libs\Prism\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -50,10 +53,16 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\AbstractCommandable.cs" />
+    <Compile Include="Base\AbstractPrioritizedTree.cs" />
+    <Compile Include="Base\ICommandable.cs" />
+    <Compile Include="Base\IPrioritizedTree.cs" />
     <Compile Include="CommandManager.cs" />
     <Compile Include="Base\IView.cs" />
     <Compile Include="Base\IViewModel.cs" />
     <Compile Include="Events\DocumentLoadedEvent.cs" />
+    <Compile Include="Menu\AbstractMenuItem.cs" />
+    <Compile Include="Menu\MenuItemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

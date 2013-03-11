@@ -9,7 +9,8 @@ namespace FirstPrismApp.Infrastructure
 		public ViewModelBase(IView view)
 		{
 			View = view;
-			View.ViewModel = this;
+			if (View != null)
+				View.ViewModel = this;
 		}
 
 		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
