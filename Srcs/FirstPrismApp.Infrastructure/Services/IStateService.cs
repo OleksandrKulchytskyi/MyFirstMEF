@@ -10,12 +10,13 @@ namespace FirstPrismApp.Infrastructure.Services
 		IList<string> GetRecent();
 
 		void AddToRecentAndSetCurrent(string doc);
+		void CloseDocument();
 	}
 
 	public sealed class ApplicationStateService : IStateService
 	{
 		private Queue<string> _container;
-
+		private string _currentDoc = null;
 		public ApplicationStateService()
 		{
 			_container = new Queue<string>(8);
@@ -23,9 +24,7 @@ namespace FirstPrismApp.Infrastructure.Services
 
 		public string GetCurrentDocument()
 		{
-			if (_container.Count == 0)
-				return null;
-			return _container.Peek();
+			return _currentDoc;
 		}
 
 		public IList<string> GetRecent()
@@ -39,6 +38,13 @@ namespace FirstPrismApp.Infrastructure.Services
 				_container.Dequeue();
 
 			_container.Enqueue(doc);
+			_currentDoc = doc;
+		}
+
+
+		public void CloseDocument()
+		{
+			_currentDoc = null;
 		}
 	}
 }

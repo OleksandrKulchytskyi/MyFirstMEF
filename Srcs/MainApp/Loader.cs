@@ -71,6 +71,7 @@ namespace MainApp
 		{
 			var evnt = new CloseDocumentEvent() { PathToDocument = _container.Resolve<IStateService>().GetCurrentDocument() };
 			_container.Resolve<IEventAggregator>().GetEvent<CloseDocumentEvent>().Publish(evnt);
+			_container.Resolve<IStateService>().CloseDocument();
 		}
 
 		private bool CanClose()
