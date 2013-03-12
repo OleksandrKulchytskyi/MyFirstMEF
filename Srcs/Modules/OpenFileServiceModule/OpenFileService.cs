@@ -38,6 +38,7 @@ namespace OpenFileServiceModule
 
 			if (result == true && !string.IsNullOrWhiteSpace(location.ToString()))
 			{
+				_container.Resolve<IStateService>().AddToRecentAndSetCurrent(location.ToString());
 				DocumentLoadingEvent openValue = new DocumentLoadingEvent() { Path = location.ToString() };
 				_eventAggregator.GetEvent<DocumentLoadingEvent>().Publish(openValue);
 				return location.ToString();

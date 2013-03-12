@@ -19,7 +19,7 @@ namespace DetailedViewModule
 		public void Initialize()
 		{
 			_container.RegisterType<IDetailedView, DetailedView>();
-			_container.RegisterType<IDetailedViewViewModel, DetailedViewViewModel>();
+			_container.RegisterType<IDetailedViewViewModel, DetailedViewViewModel>(new ContainerControlledLifetimeManager());
 
 			var vm = _container.Resolve<IDetailedViewViewModel>();
 			vm.Entry = new Business.Common.LogEntryDescription();

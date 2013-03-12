@@ -1,7 +1,9 @@
 ﻿using FirstPrismApp.Infrastructure;
+using FirstPrismApp.Infrastructure.Events;
 using FirstPrismApp.Infrastructure.Menu;
 using FirstPrismApp.Infrastructure.Services;
 using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using System;
 using System.Windows.Input;
@@ -27,6 +29,8 @@ namespace MainApp
 
 		private void InitializeCoreServices()
 		{
+			_container.RegisterType<IStateService, ApplicationStateService>(new ContainerControlledLifetimeManager());
+			
 			_container.RegisterType<ICommandManager, FirstPrismApp.Infrastructure.CommandManager>(new ContainerControlledLifetimeManager());
 			_container.RegisterType<AbstractMenuItem, MenuItemViewModel>(new ContainerControlledLifetimeManager(),
 																		new InjectionConstructor(new InjectionParameter(typeof(string), "$MAIN$"),
@@ -42,14 +46,17 @@ namespace MainApp
 		{
 			ICommandManager manager = _container.Resolve<ICommandManager>();
 
-			DelegateCommand closeCommand = new DelegateCommand(CloseCommand);
+			DelegateCommand closeCommand = new DelegateCommand(CloseCommand, CanClose);
+			DelegateCommand exitCommand = new DelegateCommand(ExitCommand);
 			DelegateCommand openCommand = new DelegateCommand(OpenDocument);
 
-			manager.RegisterCommand("EXIT", closeCommand);
 			manager.RegisterCommand("OPEN", openCommand);
+			manager.RegisterCommand("CLOSE", closeCommand);
+			manager.RegisterCommand("EXIT", exitCommand);
+			manager.Refresh();
 		}
 
-		private void CloseCommand()
+		private void ExitCommand()
 		{
 			App.Current.Shutdown();
 		}
@@ -58,6 +65,17 @@ namespace MainApp
 		{
 			IOpenFileService service = _container.Resolve<IOpenFileService>();
 			service.Open();
+		}
+
+		private void CloseCommand()
+		{
+			var evnt = new CloseDocumentEvent() { PathToDocument = _container.Resolve<IStateService>().GetCurrentDocument() };
+			_container.Resolve<IEventAggregator>().GetEvent<CloseDocumentEvent>().Publish(evnt);
+		}
+
+		private bool CanClose()
+		{
+			return _container.Resolve<IStateService>().GetCurrentDocument() != null;
 		}
 
 		private void LoadMenus()
@@ -69,8 +87,10 @@ namespace MainApp
 
 			vm.Get("_File").Add((new MenuItemViewModel("_Open", 2, new BitmapImage(new Uri(@"pack://application:,,,/MainApp;component/Icons/OpenFD.png")),
 														cmdManager.GetCommand("OPEN"), new KeyGesture(Key.O, ModifierKeys.Control, "Ctrl + O"))));
-			vm.Get("_File").Add(new MenuItemViewModel("E_xit", 3, null, cmdManager.GetCommand("EXIT"), new KeyGesture(Key.F4, ModifierKeys.Alt, "Alt + F4"), false, _container));
+			vm.Get("_File").Add((new MenuItemViewModel("_Close", 2, null, cmdManager.GetCommand("CLOSE"),
+																		new KeyGesture(Key.F4, ModifierKeys.Control, "Ctrl + F4"))));
 
+			vm.Get("_File").Add(new MenuItemViewModel("_Exit", 3, null, cmdManager.GetCommand("EXIT"), new KeyGesture(Key.F4, ModifierKeys.Alt, "Alt + F4"), false, _container));
 		}
 	}
 }

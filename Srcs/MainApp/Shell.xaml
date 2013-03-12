@@ -9,7 +9,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary x:Name="ThemeDictionary">
                     <ResourceDictionary.MergedDictionaries>
-
                     </ResourceDictionary.MergedDictionaries>
                 </ResourceDictionary>
                 <ResourceDictionary Source="pack://application:,,,/FirstPrismApp.Infrastructure;component/Styles/Controls.xaml" />
@@ -17,8 +16,6 @@
         </ResourceDictionary>
     </Window.Resources>
     <DockPanel LastChildFill="True">
-        <!--<ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ToolbarRegion}" />-->
-        <!--<ItemsControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ToolbarRegion}" />-->
         <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ToolbarRegion}" />
         <Grid>
             <Grid.ColumnDefinitions>

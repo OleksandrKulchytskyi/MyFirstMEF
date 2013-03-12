@@ -5,6 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" >
     <Grid>
-        <TextBox AcceptsReturn="True" AcceptsTab="True" Text="{Binding Path=Content, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox AcceptsReturn="True" AcceptsTab="True" Text="{Binding Path=Entry.Content, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </UserControl>

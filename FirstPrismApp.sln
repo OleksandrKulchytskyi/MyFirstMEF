@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolbarModule", "Srcs\Modul
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenFileServiceModule", "Srcs\Modules\OpenFileServiceModule\OpenFileServiceModule.csproj", "{C87D0156-D287-48D3-BBC9-2DBC624E8D35}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogParsingModule", "Srcs\Modules\LogParsingModule\LogParsingModule.csproj", "{95D77B2A-8C35-41B5-BA42-E4BDD12BF636}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{C87D0156-D287-48D3-BBC9-2DBC624E8D35}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C87D0156-D287-48D3-BBC9-2DBC624E8D35}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C87D0156-D287-48D3-BBC9-2DBC624E8D35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95D77B2A-8C35-41B5-BA42-E4BDD12BF636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95D77B2A-8C35-41B5-BA42-E4BDD12BF636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95D77B2A-8C35-41B5-BA42-E4BDD12BF636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95D77B2A-8C35-41B5-BA42-E4BDD12BF636}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{29EA605C-C57A-499A-A3CB-59E5AC96650D} = {F6779D86-5213-4294-A9AC-6D25C9C3B661}
 		{3046016E-7E19-451A-8194-5626691EC7B7} = {F6779D86-5213-4294-A9AC-6D25C9C3B661}
 		{C87D0156-D287-48D3-BBC9-2DBC624E8D35} = {F6779D86-5213-4294-A9AC-6D25C9C3B661}
+		{95D77B2A-8C35-41B5-BA42-E4BDD12BF636} = {F6779D86-5213-4294-A9AC-6D25C9C3B661}
 		{E946BBBB-8994-4AE8-8867-C2F689B64449} = {1FBA29F2-A0B0-4E07-A8A2-BDE75B200D63}
 	EndGlobalSection
 EndGlobal

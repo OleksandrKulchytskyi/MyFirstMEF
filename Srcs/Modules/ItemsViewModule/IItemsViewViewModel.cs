@@ -7,5 +7,6 @@ namespace ItemsViewModule
 	public interface IItemsViewViewModel : IViewModel
 	{
 		ObservableCollection<LogItem> Entries { get; set; }
+		bool IsBusy { get; set; }
 	}
 }

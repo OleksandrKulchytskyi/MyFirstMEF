@@ -60,7 +60,9 @@
     <Compile Include="CommandManager.cs" />
     <Compile Include="Base\IView.cs" />
     <Compile Include="Base\IViewModel.cs" />
+    <Compile Include="Events\CloseDocumentEvent.cs" />
     <Compile Include="Events\DocumentLoadedEvent.cs" />
+    <Compile Include="Events\EntryChangedEvent.cs" />
     <Compile Include="Menu\AbstractMenuItem.cs" />
     <Compile Include="Menu\MenuItemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -77,7 +79,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="RegionConstants.cs" />
+    <Compile Include="Services\IEntryContentService.cs" />
     <Compile Include="Services\IOpenFileService.cs" />
+    <Compile Include="Services\IParsingService.cs" />
+    <Compile Include="Services\IStateService.cs" />
     <Compile Include="StackPanelRegionAdapter.cs" />
     <Compile Include="Base\ViewModelBase.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
