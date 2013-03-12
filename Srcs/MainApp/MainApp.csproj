@@ -119,6 +119,12 @@
   <ItemGroup>
     <Resource Include="Icons\OpenFD.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Error.ico" />
+    <Resource Include="Icons\Fatal.ico" />
+    <Resource Include="Icons\Info.ico" />
+    <Resource Include="Icons\Warn.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
