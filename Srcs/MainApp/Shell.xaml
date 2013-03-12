@@ -4,10 +4,22 @@
         xmlns:prism="http://www.codeplex.com/prism"
         xmlns:inf="clr-namespace:FirstPrismApp.Infrastructure;assembly=FirstPrismApp.Infrastructure"
         Title="Shell">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Name="ThemeDictionary">
+                    <ResourceDictionary.MergedDictionaries>
+
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/FirstPrismApp.Infrastructure;component/Styles/Controls.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <DockPanel LastChildFill="True">
         <!--<ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ToolbarRegion}" />-->
         <!--<ItemsControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ToolbarRegion}" />-->
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ToolbarRegion}" />
+        <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ToolbarRegion}" />
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.5*"/>

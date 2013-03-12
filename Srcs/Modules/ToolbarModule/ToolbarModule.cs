@@ -19,12 +19,12 @@ namespace ToolbarModule
 
 		public void Initialize()
 		{
-			IRegion region = _regionManager.Regions[RegionConstants.ToolbarRegion];
+			_container.RegisterType<IToolbarView, ToolbarView>();
+			_container.RegisterType<IToolbarViewViewModel, ToolbarViewViewModel>();
 
-			region.Add(_container.Resolve<ToolbarView>());
-			region.Add(_container.Resolve<ToolbarView>());
-			region.Add(_container.Resolve<ToolbarView>());
-			region.Add(_container.Resolve<ToolbarView>());
+			IRegion region = _regionManager.Regions[RegionConstants.ToolbarRegion];
+			var vm = _container.Resolve<IToolbarViewViewModel>();
+			region.Add(vm.View);
 		}
 	}
 }

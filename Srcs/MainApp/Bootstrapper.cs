@@ -13,7 +13,7 @@ namespace MainApp
 	{
 		protected override System.Windows.DependencyObject CreateShell()
 		{
-			return Container.Resolve<Shell>();
+			return (DependencyObject)Container.Resolve<Shell>();
 		}
 
 		protected override void InitializeShell()
@@ -40,8 +40,8 @@ namespace MainApp
 
 		protected override void InitializeModules()
 		{
-			base.InitializeModules();
 			Loader loader = new Loader(Container);
+			base.InitializeModules();
 		}
 
 		protected override Microsoft.Practices.Prism.Regions.RegionAdapterMappings ConfigureRegionAdapterMappings()

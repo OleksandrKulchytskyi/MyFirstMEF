@@ -2,14 +2,23 @@
 
 namespace ToolbarModule
 {
-	/// <summary>
-	/// Interaction logic for ToolbarView.xaml
-	/// </summary>
-	public partial class ToolbarView : UserControl
+	public partial class ToolbarView : UserControl, IToolbarView
 	{
 		public ToolbarView()
 		{
 			InitializeComponent();
+		}
+
+		public FirstPrismApp.Infrastructure.IViewModel ViewModel
+		{
+			get
+			{
+				return (IToolbarViewViewModel)DataContext;
+			}
+			set
+			{
+				DataContext = value;
+			}
 		}
 	}
 }
