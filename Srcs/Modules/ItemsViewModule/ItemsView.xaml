@@ -13,6 +13,20 @@
                     <TextBlock Text="{Binding Path=LineNumber, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBlock Text="{Binding Path=Severity, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding Path=Severity}" Value="Info">
+                        <Setter TargetName="img"  Property="Source" Value="pack://application:,,,/MainApp;component/Icons/Info.ico"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=Severity}" Value="Warn">
+                        <Setter TargetName="img"  Property="Source" Value="pack://application:,,,/MainApp;component/Icons/Warn.ico"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=Severity}" Value="Error">
+                        <Setter TargetName="img"  Property="Source" Value="pack://application:,,,/MainApp;component/Icons/Error.ico"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Path=Severity}" Value="Fatal">
+                        <Setter TargetName="img"  Property="Source" Value="pack://application:,,,/MainApp;component/Icons/Fatal.ico"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
             </DataTemplate>
         </Grid.Resources>
         <xctk:BusyIndicator IsBusy="{Binding Path=IsBusy,UpdateSourceTrigger=PropertyChanged}" BusyContent="Parsing document..." >
