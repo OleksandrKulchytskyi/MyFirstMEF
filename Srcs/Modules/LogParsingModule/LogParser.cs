@@ -1,11 +1,14 @@
 ﻿using Business.Common;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace LogParsingModule
 {
 	public class LogParser : FirstPrismApp.Infrastructure.Services.IParsingService
 	{
+		private const string _oneSpace = " ";
+
 		public static IList<string> Msgs = new List<string>(4) { "INFO", "WARN", "ERROR", "FATAL" };
 
 		public IList<LogItem> ParseLog(string filePath)
@@ -47,6 +50,7 @@ namespace LogParsingModule
 						item = new LogItem();
 						item.Severity = severity.ToString();
 						item.LineNumber = lineNumber;
+						item.Time = ExtractTime(line);
 						entries.Add(item);
 					}
 					lineNumber++;
@@ -71,6 +75,32 @@ namespace LogParsingModule
 				}
 			}
 			return result;
+		}
+
+		internal static System.DateTime ExtractTime(string line)
+		{
+			if (string.IsNullOrEmpty(line))
+			{
+				return new System.DateTime();
+			}
+
+
+			int idx1 = line.IndexOf(_oneSpace);
+			int idx2 = line.IndexOf(_oneSpace, (idx1 + 2));
+			int idx3 = line.IndexOf(",", (idx2 + 2));
+
+			if (idx1 > 0 && idx2 > 0 && idx3 > 0)
+			{
+				StringBuilder sb = new StringBuilder();
+				sb.Append(line.Substring(idx1, idx2 - idx1));
+				sb.Append(line.Substring(idx2, idx3 - idx2));
+				System.DateTime time;
+				if (System.DateTime.TryParse(sb.ToString(), out time))
+					return time;
+
+				sb = null;
+			}
+			return new System.DateTime();
 		}
 	}
 }
