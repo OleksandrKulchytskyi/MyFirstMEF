@@ -11,6 +11,7 @@ namespace LogParsingModule
 		public IList<LogItem> ParseLog(string filePath)
 		{
 			if (!File.Exists(filePath))
+
 				throw new FileNotFoundException("File wasn't found.", filePath);
 
 			IList<LogItem> entries = new List<LogItem>();
