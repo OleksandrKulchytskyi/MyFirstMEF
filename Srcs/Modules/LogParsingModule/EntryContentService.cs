@@ -1,18 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FirstPrismApp.Infrastructure.Base;
+using FirstPrismApp.Infrastructure.Services;
+using Microsoft.Practices.Unity;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace LogParsingModule
 {
-	public sealed class EntryContentService : FirstPrismApp.Infrastructure.Services.IEntryContentService
+	public sealed class EntryContentService : IEntryContentService
 	{
+		private IUnityContainer _container=null;
+
+		public EntryContentService(IUnityContainer container)
+		{
+			_container = container;
+		}
+
 		public string GetErrorContentForLine(string file, int fromLine)
 		{
 			if (!File.Exists(file))
+			{
+				_container.Resolve<ILogger>().Log(LogSeverity.Warn, string.Format("File {0} is not exists", file), null);
 				throw new FileNotFoundException("File wasn't found.", file);
+			}
+			
 			string result = null;
+
 			using (StreamReader sr = new StreamReader(file, true))
 			{
 				string line = sr.ReadLine(); ;

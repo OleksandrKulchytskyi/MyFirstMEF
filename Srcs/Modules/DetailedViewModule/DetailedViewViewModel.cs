@@ -70,11 +70,13 @@ namespace DetailedViewModule
 
 			if (_closeSubsToken != null)
 			{
-				_evntAgg.GetEvent<CloseDocumentEvent>().Unsubscribe(_closeSubsToken); _closeSubsToken = null;
+				_evntAgg.GetEvent<CloseDocumentEvent>().Unsubscribe(_closeSubsToken); 
+				_closeSubsToken = null;
 			}
 			if (_entryChangedToken != null)
 			{
-				_evntAgg.GetEvent<EntryChangedEvent>().Unsubscribe(_entryChangedToken); _entryChangedToken = null;
+				_evntAgg.GetEvent<EntryChangedEvent>().Unsubscribe(_entryChangedToken); 
+				_entryChangedToken = null;
 			}
 
 			if (_evntAgg != null) _evntAgg = null;
