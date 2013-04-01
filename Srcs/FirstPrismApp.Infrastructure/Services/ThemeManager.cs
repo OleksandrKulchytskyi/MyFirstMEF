@@ -10,16 +10,13 @@ namespace FirstPrismApp.Infrastructure.Services
 	public sealed class ThemeManager : IThemeManager
 	{
 		private static readonly Dictionary<string, ITheme> _themeDictionary = new Dictionary<string, ITheme>();
-
 		private IEventAggregator _eventAggregator;
-
 		//private ILoggerService _logger;
 
 		public ThemeManager(IEventAggregator eventAggregator)//, ILoggerService logger)
 		{
 			Themes = new ObservableCollection<ITheme>();
 			_eventAggregator = eventAggregator;
-
 			//_logger = logger;
 		}
 
@@ -64,7 +61,6 @@ namespace FirstPrismApp.Infrastructure.Services
 		{
 			if (!_themeDictionary.ContainsKey(theme.Name))
 			{
-				//theme.UriList.Add(new Uri("pack://application:,,,/Wide.Core;component/Styles/MenuResource.xaml"));
 				_themeDictionary.Add(theme.Name, theme);
 				Themes.Add(theme);
 				return true;

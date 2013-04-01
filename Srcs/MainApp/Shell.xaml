@@ -4,26 +4,26 @@
         xmlns:prism="http://www.codeplex.com/prism"
         xmlns:inf="clr-namespace:FirstPrismApp.Infrastructure;assembly=FirstPrismApp.Infrastructure"
         Title="Shell">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary x:Name="ThemeDictionary">
-                    <ResourceDictionary.MergedDictionaries>
-                    </ResourceDictionary.MergedDictionaries>
-                </ResourceDictionary>
-                <ResourceDictionary Source="pack://application:,,,/FirstPrismApp.Infrastructure;component/Styles/Controls.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
-    <DockPanel LastChildFill="True">
-        <ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ToolbarRegion}" />
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.5*"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <ContentControl prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ItemsRegion}" />
-            <ContentControl prism:RegionManager.RegionName="{x:Static inf:RegionConstants.DetailsRegion}" Grid.Column="1"/>
-        </Grid>
-    </DockPanel>
+	<Window.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary x:Name="ThemeDictionary">
+					<ResourceDictionary.MergedDictionaries>
+					</ResourceDictionary.MergedDictionaries>
+				</ResourceDictionary>
+				<ResourceDictionary Source="pack://application:,,,/FirstPrismApp.Infrastructure;component/Styles/Controls.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Window.Resources>
+	<DockPanel LastChildFill="True">
+		<ContentControl DockPanel.Dock="Top" prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ToolbarRegion}" />
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="0.5*"/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<ContentControl prism:RegionManager.RegionName="{x:Static inf:RegionConstants.ItemsRegion}" />
+			<ContentControl prism:RegionManager.RegionName="{x:Static inf:RegionConstants.DetailsRegion}" Grid.Column="1"/>
+		</Grid>
+	</DockPanel>
 </Window>

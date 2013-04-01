@@ -62,6 +62,7 @@
     <Compile Include="Base\AbstractCommandable.cs" />
     <Compile Include="Base\AbstractPrioritizedTree.cs" />
     <Compile Include="Base\ICommandable.cs" />
+    <Compile Include="Base\ILogger.cs" />
     <Compile Include="Base\IPrioritizedTree.cs" />
     <Compile Include="Base\ITheme.cs" />
     <Compile Include="CommandManager.cs" />

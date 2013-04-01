@@ -1,5 +1,6 @@
 ﻿using Business.Common;
 using FirstPrismApp.Infrastructure;
+using FirstPrismApp.Infrastructure.Base;
 using FirstPrismApp.Infrastructure.Events;
 using FirstPrismApp.Infrastructure.Services;
 using Microsoft.Practices.Prism.Events;
@@ -84,6 +85,7 @@ namespace ItemsViewModule
 			IsBusy = true;
 			try
 			{
+				_container.Resolve<ILogger>().Log(LogSeverity.Info, string.Format("Begin load document: {0}", args.Path), null);
 				System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
 				IParsingService service = _container.Resolve<IParsingService>();
 				Entries = new ObservableCollection<LogItem>(service.ParseLog(args.Path));
@@ -92,6 +94,7 @@ namespace ItemsViewModule
 			}
 			catch (Exception ex)
 			{
+				_container.Resolve<ILogger>().Log(LogSeverity.Error, ex.Message, ex);
 				MessageBox.Show(System.Windows.Application.Current.MainWindow, ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 			}
 			finally
@@ -102,6 +105,7 @@ namespace ItemsViewModule
 
 		private void OnClosingDocument(CloseDocumentEvent args)
 		{
+			_container.Resolve<ILogger>().Log(LogSeverity.Info, string.Format("Begin document close operation: {0}", args.PathToDocument), null);
 			Entries.Clear();
 			_container.Resolve<ICommandManager>().Refresh();
 		}

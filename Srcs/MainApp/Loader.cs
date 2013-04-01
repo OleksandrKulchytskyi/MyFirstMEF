@@ -17,6 +17,7 @@ namespace MainApp
 	internal class Loader
 	{
 		private IUnityContainer _container;
+		private ILogger _logger;
 
 		public Loader(IUnityContainer container)
 		{
