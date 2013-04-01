@@ -32,6 +32,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MahApps.Metro">
+      <HintPath>..\..\Libs\Prism\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro.Resources">
+      <HintPath>..\..\Libs\Prism\MahApps.Metro.Resources.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\..\Libs\Prism\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
@@ -57,12 +63,14 @@
     <Compile Include="Base\AbstractPrioritizedTree.cs" />
     <Compile Include="Base\ICommandable.cs" />
     <Compile Include="Base\IPrioritizedTree.cs" />
+    <Compile Include="Base\ITheme.cs" />
     <Compile Include="CommandManager.cs" />
     <Compile Include="Base\IView.cs" />
     <Compile Include="Base\IViewModel.cs" />
     <Compile Include="Events\CloseDocumentEvent.cs" />
     <Compile Include="Events\DocumentLoadedEvent.cs" />
     <Compile Include="Events\EntryChangedEvent.cs" />
+    <Compile Include="Events\ThemeChangedEvent.cs" />
     <Compile Include="Menu\AbstractMenuItem.cs" />
     <Compile Include="Menu\MenuItemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -83,8 +91,11 @@
     <Compile Include="Services\IOpenFileService.cs" />
     <Compile Include="Services\IParsingService.cs" />
     <Compile Include="Services\IStateService.cs" />
+    <Compile Include="Base\IThemeManager.cs" />
+    <Compile Include="Services\ThemeManager.cs" />
     <Compile Include="StackPanelRegionAdapter.cs" />
     <Compile Include="Base\ViewModelBase.cs" />
+    <Compile Include="Themes\DarkTheme.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -102,12 +113,35 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Styles\Button.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\Controls.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\DarkColors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\DarkTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Menu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\WindowCommands.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy  /Y "$(TargetDir)Mah*.dll" "$(SolutionDir)Srcs\MainApp\bin\$(ConfigurationName)"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

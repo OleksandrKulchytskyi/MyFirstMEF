@@ -1,8 +1,6 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Input;
 
 namespace FirstPrismApp.Infrastructure
@@ -10,7 +8,9 @@ namespace FirstPrismApp.Infrastructure
 	public interface ICommandManager
 	{
 		bool RegisterCommand(string name, ICommand command);
+
 		ICommand GetCommand(string name);
+
 		void Refresh();
 	}
 
@@ -39,7 +39,9 @@ namespace FirstPrismApp.Infrastructure
 			return null;
 		}
 
-
+		/// <summary>
+		/// For each command method RaiseCanExecuteChanged() wiil be invoked
+		/// </summary>
 		public void Refresh()
 		{
 			foreach (KeyValuePair<string, ICommand> keyValuePair in _commands)

@@ -1,7 +1,9 @@
 ﻿using FirstPrismApp.Infrastructure;
+using FirstPrismApp.Infrastructure.Base;
 using FirstPrismApp.Infrastructure.Events;
 using FirstPrismApp.Infrastructure.Menu;
 using FirstPrismApp.Infrastructure.Services;
+using FirstPrismApp.Infrastructure.Themes;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
@@ -30,7 +32,7 @@ namespace MainApp
 		private void InitializeCoreServices()
 		{
 			_container.RegisterType<IStateService, ApplicationStateService>(new ContainerControlledLifetimeManager());
-			
+			_container.RegisterType<IThemeManager, ThemeManager>(new ContainerControlledLifetimeManager());
 			_container.RegisterType<ICommandManager, FirstPrismApp.Infrastructure.CommandManager>(new ContainerControlledLifetimeManager());
 			_container.RegisterType<AbstractMenuItem, MenuItemViewModel>(new ContainerControlledLifetimeManager(),
 																		new InjectionConstructor(new InjectionParameter(typeof(string), "$MAIN$"),
@@ -54,6 +56,17 @@ namespace MainApp
 			manager.RegisterCommand("CLOSE", closeCommand);
 			manager.RegisterCommand("EXIT", exitCommand);
 			manager.Refresh();
+		}
+
+		private void LoadTheme()
+		{
+			IThemeManager manager = _container.Resolve<IThemeManager>();
+			//manager.AddTheme(new VS2010());
+			//manager.SetCurrent("VS2010");
+			//manager.AddTheme(new LightTheme());
+			//manager.SetCurrent("Light");
+			manager.AddTheme(new DarkTheme());
+			manager.SetCurrent("Dark");
 		}
 
 		private void ExitCommand()

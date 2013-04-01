@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Prism.Regions;
+using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -15,7 +16,7 @@ namespace FirstPrismApp.Infrastructure
 		{
 			region.Views.CollectionChanged += (s, args) =>
 			{
-				if (args.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+				if (args.Action == NotifyCollectionChangedAction.Add)
 				{
 					foreach (FrameworkElement element in args.NewItems)
 					{
@@ -24,7 +25,7 @@ namespace FirstPrismApp.Infrastructure
 				}
 
 				//handle remove
-				if (args.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
+				if (args.Action == NotifyCollectionChangedAction.Remove)
 				{
 					foreach (FrameworkElement element in args.OldItems)
 					{
@@ -38,6 +39,5 @@ namespace FirstPrismApp.Infrastructure
 		{
 			return new AllActiveRegion();
 		}
-
 	}
 }
