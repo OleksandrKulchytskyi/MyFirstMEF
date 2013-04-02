@@ -65,6 +65,7 @@
     <Compile Include="FullViewModule.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IToolbarViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -82,6 +83,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Highlightings\Default.xshd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -101,9 +103,17 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\ShowEnter32.png" />
+    <Resource Include="Images\ShowLineNumbers32.png" />
+    <Resource Include="Images\ShowSpaces32.png" />
+    <Resource Include="Images\ShowTab32.png" />
+    <Resource Include="Images\ShowWordWrap32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy  /Y "$(TargetDir)$(ProjectName).dll" "$(SolutionDir)Srcs\MainApp\bin\$(ConfigurationName)"</PostBuildEvent>
+    <PostBuildEvent>xcopy  /Y "$(TargetDir)$(ProjectName).dll" "$(SolutionDir)Srcs\MainApp\bin\$(ConfigurationName)"
+xcopy  /Y "$(TargetDir)*AvalonEdit.dll" "$(SolutionDir)Srcs\MainApp\bin\$(ConfigurationName)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

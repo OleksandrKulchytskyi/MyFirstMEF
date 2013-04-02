@@ -18,7 +18,7 @@ namespace FullViewModule
 		{
 			get
 			{
-				return DataContext as IViewModel;
+				return (IFullViewViewModel)DataContext;
 			}
 			set
 			{

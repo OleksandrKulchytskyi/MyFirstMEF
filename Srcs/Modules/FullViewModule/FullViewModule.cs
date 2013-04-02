@@ -20,14 +20,16 @@ namespace FullViewModule
 		{
 			if (_weak.IsAlive && _weak.Get() != null)
 			{
-				_weak.Get().RegisterType<IFullView, FullViewWindow>();
-				_weak.Get().RegisterType<IFullViewViewModel, FullViewViewModel>();
-
 				var mapper = _weak.Get().Resolve<IWindowMapper>();
 				if (mapper.Get(_windowScope) == null)
 					mapper.Map(_windowScope, typeof(FullViewWindow));
 
-				IWindow wind = _weak.Get().Resolve<IWindowProvider>().Generate(_windowScope);
+				_weak.Get().RegisterType<IFullView, FullViewWindow>();
+				_weak.Get().RegisterType<IFullViewViewModel, FullViewViewModel>();
+
+				var vm = _weak.Get().Resolve<IFullViewViewModel>();
+
+				IWindow wind = (vm.View as IWindow); //_weak.Get().Resolve<IWindowProvider>().Generate(_windowScope);
 				if (wind != null)
 				{
 					wind.Owner = System.Windows.Application.Current.MainWindow;
