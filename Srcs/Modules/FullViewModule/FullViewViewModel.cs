@@ -34,12 +34,12 @@ namespace FullViewModule
 			}
 		}
 
-		void FullViewViewModel_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		private void FullViewViewModel_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			Dispose();
 		}
 
-		void FullViewViewModel_Loaded(object sender, System.Windows.RoutedEventArgs e)
+		private void FullViewViewModel_Loaded(object sender, System.Windows.RoutedEventArgs e)
 		{
 			IStateService state = _container.Get().Resolve<IStateService>();
 			if (state != null && !string.IsNullOrEmpty(state.GetCurrentDocument()))
@@ -47,7 +47,9 @@ namespace FullViewModule
 		}
 
 		#region Property IsDirty
+
 		private bool _IsDirty;
+
 		public bool IsDirty
 		{
 			get
@@ -67,7 +69,9 @@ namespace FullViewModule
 		#endregion Property IsDirty
 
 		#region Property DocumentPath
+
 		private string _DocumentPath;
+
 		public string DocumentPath
 		{
 			get
@@ -106,10 +110,13 @@ namespace FullViewModule
 				}
 			}
 		}
+
 		#endregion Property DocumentPath
 
 		#region ContentId
+
 		private string _contentId = null;
+
 		public string ContentId
 		{
 			get { return _contentId; }
@@ -122,10 +129,13 @@ namespace FullViewModule
 				}
 			}
 		}
-		#endregion
+
+		#endregion ContentId
 
 		#region TextContent
+
 		private TextDocument _document = null;
+
 		public TextDocument Document
 		{
 			get { return this._document; }
@@ -139,9 +149,11 @@ namespace FullViewModule
 				}
 			}
 		}
+
 		#endregion TextContent
 
 		#region DocumentName
+
 		public string DocumentName
 		{
 			get
@@ -152,11 +164,13 @@ namespace FullViewModule
 				return System.IO.Path.GetFileName(DocumentPath) + (IsDirty ? "*" : "");
 			}
 		}
+
 		#endregion DocumentName
 
 		#region HighlightingDefinition
 
 		private IHighlightingDefinition _highlightdef = null;
+
 		public IHighlightingDefinition HighlightDef
 		{
 			get { return this._highlightdef; }
@@ -170,9 +184,11 @@ namespace FullViewModule
 				}
 			}
 		}
-		#endregion
+
+		#endregion HighlightingDefinition
 
 		#region Title
+
 		/// <summary>
 		/// Title is the string that is usually displayed - with or without dirty mark '*' - in the docking environment
 		/// </summary>
@@ -183,7 +199,8 @@ namespace FullViewModule
 				return System.IO.Path.GetFileName(this.DocumentPath) + (this.IsDirty == true ? "*" : string.Empty);
 			}
 		}
-		#endregion
+
+		#endregion Title
 
 		public void Dispose()
 		{

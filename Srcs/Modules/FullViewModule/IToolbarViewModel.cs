@@ -2,11 +2,6 @@
 using FirstPrismApp.Infrastructure.Base;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace FullViewModule
@@ -27,7 +22,7 @@ namespace FullViewModule
 
 	public sealed class ToolbarViewModel : ViewModelBase, IToolbarViewModel
 	{
-		GenericWeakReference<IEventAggregator> _eventAggr;
+		private GenericWeakReference<IEventAggregator> _eventAggr;
 
 		public ToolbarViewModel(IEventAggregator eventAggr)
 			: base(null)
@@ -36,7 +31,9 @@ namespace FullViewModule
 		}
 
 		#region WordWrap
+
 		private bool mWordWrap = false;
+
 		/// <summary>
 		///Toggle state WordWrap
 		/// </summary>
@@ -55,10 +52,13 @@ namespace FullViewModule
 				}
 			}
 		}
+
 		#endregion WordWrap
 
 		#region ShowLineNumbers
+
 		private bool _ShowLineNumbers = false;
+
 		/// <summary>
 		///Toggle state WordWrap
 		/// </summary>
@@ -77,11 +77,13 @@ namespace FullViewModule
 				}
 			}
 		}
+
 		#endregion ShowLineNumbers
 
-
 		#region ToggleEditorOptionCommand
-		DelegateCommand<object> _toggleEditorOptionCommand = null;
+
+		private DelegateCommand<object> _toggleEditorOptionCommand = null;
+
 		public ICommand ToggleEditorOptionCommand
 		{
 			get
@@ -117,7 +119,6 @@ namespace FullViewModule
 
 			ToggleEditorOption t = (ToggleEditorOption)parameter;
 
-
 			switch (t)
 			{
 				case ToggleEditorOption.WordWrap:
@@ -132,6 +133,7 @@ namespace FullViewModule
 					break;
 			}
 		}
+
 		#endregion ToggleEditorOptionCommand
 	}
 }
