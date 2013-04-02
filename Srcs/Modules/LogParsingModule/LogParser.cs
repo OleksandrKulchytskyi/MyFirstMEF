@@ -8,13 +8,11 @@ namespace LogParsingModule
 	public class LogParser : FirstPrismApp.Infrastructure.Services.IParsingService
 	{
 		private const string _oneSpace = " ";
-
 		public static IList<string> Msgs = new List<string>(4) { "INFO", "WARN", "ERROR", "FATAL" };
 
 		public IList<LogItem> ParseLog(string filePath)
 		{
 			if (!File.Exists(filePath))
-
 				throw new FileNotFoundException("File wasn't found.", filePath);
 
 			IList<LogItem> entries = new List<LogItem>();
@@ -56,7 +54,6 @@ namespace LogParsingModule
 					lineNumber++;
 				}
 			}
-
 			return entries;
 		}
 
@@ -80,10 +77,7 @@ namespace LogParsingModule
 		internal static System.DateTime ExtractTime(string line)
 		{
 			if (string.IsNullOrEmpty(line))
-			{
 				return new System.DateTime();
-			}
-
 
 			int idx1 = line.IndexOf(_oneSpace);
 			int idx2 = line.IndexOf(_oneSpace, (idx1 + 2));

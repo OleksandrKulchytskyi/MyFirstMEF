@@ -4,12 +4,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CC00FB09-42CF-4290-87D9-B9893456ACF4}</ProjectGuid>
+    <ProjectGuid>{4078D618-D58E-4E0D-8FCF-B03A26BBD37E}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FirstPrismApp.Infrastructure</RootNamespace>
-    <AssemblyName>FirstPrismApp.Infrastructure</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>FullViewModule</RootNamespace>
+    <AssemblyName>FullViewModule</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -32,17 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MahApps.Metro">
-      <HintPath>..\..\Libs\Prism\MahApps.Metro.dll</HintPath>
-    </Reference>
-    <Reference Include="MahApps.Metro.Resources">
-      <HintPath>..\..\Libs\Prism\MahApps.Metro.Resources.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Practices.Prism">
-      <HintPath>..\..\Libs\Prism\Microsoft.Practices.Prism.dll</HintPath>
+      <HintPath>..\..\..\Libs\Prism\Microsoft.Practices.Prism.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity">
-      <HintPath>..\..\Libs\Prism\Microsoft.Practices.Unity.dll</HintPath>
+      <HintPath>..\..\..\Libs\Prism\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -59,23 +53,15 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base\AbstractCommandable.cs" />
-    <Compile Include="Base\AbstractPrioritizedTree.cs" />
-    <Compile Include="Base\GenericWeakReference.cs" />
-    <Compile Include="Base\ICommandable.cs" />
-    <Compile Include="Base\ILogger.cs" />
-    <Compile Include="Base\IPrioritizedTree.cs" />
-    <Compile Include="Base\ITheme.cs" />
-    <Compile Include="Base\IWindowProvider.cs" />
-    <Compile Include="CommandManager.cs" />
-    <Compile Include="Base\IView.cs" />
-    <Compile Include="Base\IViewModel.cs" />
-    <Compile Include="Events\CloseDocumentEvent.cs" />
-    <Compile Include="Events\DocumentLoadedEvent.cs" />
-    <Compile Include="Events\EntryChangedEvent.cs" />
-    <Compile Include="Events\ThemeChangedEvent.cs" />
-    <Compile Include="Menu\AbstractMenuItem.cs" />
-    <Compile Include="Menu\MenuItemViewModel.cs" />
+    <Compile Include="FullViewViewModel.cs" />
+    <Compile Include="IFullView.cs" />
+    <Compile Include="IFullViewViewModel.cs" />
+    <Compile Include="FullViewWindow.xaml.cs">
+      <DependentUpon>FullViewWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FullViewModule.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -89,18 +75,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="RegionConstants.cs" />
-    <Compile Include="Services\IEntryContentService.cs" />
-    <Compile Include="Services\IOpenFileService.cs" />
-    <Compile Include="Services\IParsingService.cs" />
-    <Compile Include="Services\IStateService.cs" />
-    <Compile Include="Base\IThemeManager.cs" />
-    <Compile Include="Services\ThemeManager.cs" />
-    <Compile Include="Services\WindowMapper.cs" />
-    <Compile Include="Services\WindowProviderService.cs" />
-    <Compile Include="StackPanelRegionAdapter.cs" />
-    <Compile Include="Base\ViewModelBase.cs" />
-    <Compile Include="Themes\DarkTheme.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -112,40 +86,20 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Business\Business.Common\Business.Common.csproj">
-      <Project>{e946bbbb-8994-4ae8-8867-c2f689b64449}</Project>
-      <Name>Business.Common</Name>
+    <ProjectReference Include="..\..\FirstPrismApp.Infrastructure\FirstPrismApp.Infrastructure.csproj">
+      <Project>{cc00fb09-42cf-4290-87d9-b9893456acf4}</Project>
+      <Name>FirstPrismApp.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Styles\Button.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\Controls.xaml">
+    <Page Include="FullViewWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\DarkColors.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\DarkTheme.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\Menu.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\WindowCommands.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy  /Y "$(TargetDir)Mah*.dll" "$(SolutionDir)Srcs\MainApp\bin\$(ConfigurationName)"</PostBuildEvent>
+    <PostBuildEvent>xcopy  /Y "$(TargetDir)$(ProjectName).dll" "$(SolutionDir)Srcs\MainApp\bin\$(ConfigurationName)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -16,8 +16,8 @@ namespace MainApp
 {
 	internal class Loader
 	{
-		private IUnityContainer _container;
-		private ILogger _logger;
+		private IUnityContainer _container = null;
+		private ILogger _logger = null;
 
 		public Loader(IUnityContainer container)
 		{
@@ -43,6 +43,9 @@ namespace MainApp
 																		new InjectionParameter(typeof(KeyGesture), null),
 																		new InjectionParameter(typeof(bool), false),
 																		new InjectionParameter(typeof(IUnityContainer), this._container)));
+
+			_container.RegisterType<IWindowMapper, WindowMapper>(new ContainerControlledLifetimeManager());
+			_container.RegisterType<IWindowProvider, WindowProviderService>(new ContainerControlledLifetimeManager());
 		}
 
 		private void LoadCommands()
@@ -53,9 +56,12 @@ namespace MainApp
 			DelegateCommand exitCommand = new DelegateCommand(ExitCommand);
 			DelegateCommand openCommand = new DelegateCommand(OpenDocument);
 
+			DelegateCommand viewFullSourceCommand = new DelegateCommand(ViewFullSource, CanViewFullSource);
+
 			manager.RegisterCommand("OPEN", openCommand);
 			manager.RegisterCommand("CLOSE", closeCommand);
 			manager.RegisterCommand("EXIT", exitCommand);
+			manager.RegisterCommand("VIEWFULL", viewFullSourceCommand);
 			manager.Refresh();
 		}
 
@@ -93,6 +99,20 @@ namespace MainApp
 			return _container.Resolve<IStateService>().GetCurrentDocument() != null;
 		}
 
+		private void ViewFullSource()
+		{
+			var manager = _container.Resolve<Microsoft.Practices.Prism.Modularity.IModuleManager>();
+			if (manager != null)
+			{
+				manager.LoadModule("FullViewModule");
+			}
+		}
+
+		private bool CanViewFullSource()
+		{
+			return _container.Resolve<IStateService>().GetCurrentDocument() != null;
+		}
+
 		private void LoadMenus()
 		{
 			ICommandManager cmdManager = _container.Resolve<ICommandManager>();
@@ -100,12 +120,17 @@ namespace MainApp
 
 			vm.Add(new MenuItemViewModel("_File", 1));
 
-			vm.Get("_File").Add((new MenuItemViewModel("_Open", 2, new BitmapImage(new Uri(@"pack://application:,,,/MainApp;component/Icons/OpenFD.png")),
+			vm.Get("_File").Add((new MenuItemViewModel("_Open", 1, new BitmapImage(new Uri(@"pack://application:,,,/MainApp;component/Icons/OpenFD.png")),
 														cmdManager.GetCommand("OPEN"), new KeyGesture(Key.O, ModifierKeys.Control, "Ctrl + O"))));
 			vm.Get("_File").Add((new MenuItemViewModel("_Close", 2, null, cmdManager.GetCommand("CLOSE"),
 																		new KeyGesture(Key.F4, ModifierKeys.Control, "Ctrl + F4"))));
+			vm.Get("_File").Add(MenuItemViewModel.Separator(3));
+			vm.Get("_File").Add(new MenuItemViewModel("_Exit", 4, null, cmdManager.GetCommand("EXIT"), new KeyGesture(Key.F4, ModifierKeys.Alt, "Alt + F4"), false, _container));
 
-			vm.Get("_File").Add(new MenuItemViewModel("_Exit", 3, null, cmdManager.GetCommand("EXIT"), new KeyGesture(Key.F4, ModifierKeys.Alt, "Alt + F4"), false, _container));
+
+			vm.Add(new MenuItemViewModel("_View", 2));
+			vm.Get("_View").Add((new MenuItemViewModel("_Full view", 1, null, cmdManager.GetCommand("VIEWFULL"),
+																		new KeyGesture(Key.L, ModifierKeys.Control, "Ctrl + L"))));
 		}
 	}
 }

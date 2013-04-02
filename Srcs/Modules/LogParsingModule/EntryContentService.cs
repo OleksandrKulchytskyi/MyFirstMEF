@@ -8,7 +8,7 @@ namespace LogParsingModule
 {
 	public sealed class EntryContentService : IEntryContentService
 	{
-		private IUnityContainer _container=null;
+		private IUnityContainer _container = null;
 
 		public EntryContentService(IUnityContainer container)
 		{
@@ -22,7 +22,7 @@ namespace LogParsingModule
 				_container.Resolve<ILogger>().Log(LogSeverity.Warn, string.Format("File {0} is not exists", file), null);
 				throw new FileNotFoundException("File wasn't found.", file);
 			}
-			
+
 			string result = null;
 
 			using (StreamReader sr = new StreamReader(file, true))
