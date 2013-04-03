@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
 		xmlns:vm="clr-namespace:FullViewModule"
-        Height="390" Width="600" Title="{Binding Path=Title, UpdateSourceTrigger=PropertyChanged}">
+        Height="440" Width="700" Title="{Binding Path=Title, UpdateSourceTrigger=PropertyChanged}">
 	<DockPanel LastChildFill="True">
 		<ToolBarTray Grid.Row="1" SnapsToDevicePixels="True"  DockPanel.Dock="Top">
 			<ToolBar  VerticalAlignment="Stretch" ToolBarTray.IsLocked="True"
