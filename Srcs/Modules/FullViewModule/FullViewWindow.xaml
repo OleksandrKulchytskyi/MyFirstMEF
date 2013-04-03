@@ -8,17 +8,14 @@
 		<ToolBarTray Grid.Row="1" SnapsToDevicePixels="True"  DockPanel.Dock="Top">
 			<ToolBar  VerticalAlignment="Stretch" ToolBarTray.IsLocked="True"
                 SnapsToDevicePixels="True">
-				<ToggleButton IsChecked="{Binding ActiveDocument.WordWrap, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                      Command="{Binding ToggleEditorOptionCommand}"
-                      CommandParameter="{x:Static vm:ToggleEditorOption.WordWrap}"
-                      ToolTip="Click this button to switch word wrap on or off">
+				<ToggleButton IsChecked="{Binding Path=ToolbarViewModel.WordWrap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+								ToolTip="Click this button to switch word wrap on or off">
 					<Image Source="/FullViewModule;component/Images/ShowWordWrap32.png" Height="32"/>
 				</ToggleButton>
-
-				<ToggleButton IsChecked="{Binding ActiveDocument.ShowLineNumbers, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                      Command="{Binding ToggleEditorOptionCommand}"
-                      CommandParameter="{x:Static vm:ToggleEditorOption.ShowLineNumber}"
-                      ToolTip="Click this button to switch display of line numbers on or off">
+				<!--Command="{Binding ToggleEditorOptionCommand}"
+                      CommandParameter="{x:Static vm:ToggleEditorOption.ShowLineNumber}"-->
+				<ToggleButton IsChecked="{Binding Path=ToolbarViewModel.ShowLineNumbers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+								ToolTip="Click this button to switch display of line numbers on or off">
 					<Image Source="/FullViewModule;component/Images/ShowLineNumbers32.png" Height="32"/>
 				</ToggleButton>
 			</ToolBar>
@@ -26,7 +23,9 @@
 		<Grid>
 			<avalonEdit:TextEditor Document="{Binding Document, UpdateSourceTrigger=PropertyChanged}"
 								SyntaxHighlighting="{Binding HighlightDef, UpdateSourceTrigger=PropertyChanged}"
-								IsModified="{Binding Path=IsDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+								IsModified="{Binding Path=IsDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+								WordWrap="{Binding Path=ToolbarViewModel.WordWrap, UpdateSourceTrigger=PropertyChanged}"
+								ShowLineNumbers="{Binding Path=ToolbarViewModel.ShowLineNumbers, UpdateSourceTrigger=PropertyChanged}"/>
 		</Grid>
 	</DockPanel>
 </Window>

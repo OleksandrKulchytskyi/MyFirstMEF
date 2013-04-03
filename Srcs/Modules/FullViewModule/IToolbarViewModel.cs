@@ -18,22 +18,20 @@ namespace FullViewModule
 	public interface IToolbarViewModel
 	{
 		bool WordWrap { get; set; }
+		bool ShowLineNumbers { get; set; }
 	}
 
 	public sealed class ToolbarViewModel : ViewModelBase, IToolbarViewModel
 	{
-		private GenericWeakReference<IEventAggregator> _eventAggr;
-
-		public ToolbarViewModel(IEventAggregator eventAggr)
+		//private GenericWeakReference<IEventAggregator> _eventAggr;
+		public ToolbarViewModel()//IEventAggregator eventAggr)
 			: base(null)
 		{
-			_eventAggr = new GenericWeakReference<IEventAggregator>(eventAggr);
+			//_eventAggr = new GenericWeakReference<IEventAggregator>(eventAggr);
 		}
 
 		#region WordWrap
-
 		private bool mWordWrap = false;
-
 		/// <summary>
 		///Toggle state WordWrap
 		/// </summary>
@@ -52,13 +50,10 @@ namespace FullViewModule
 				}
 			}
 		}
-
 		#endregion WordWrap
 
 		#region ShowLineNumbers
-
 		private bool _ShowLineNumbers = false;
-
 		/// <summary>
 		///Toggle state WordWrap
 		/// </summary>
@@ -77,13 +72,10 @@ namespace FullViewModule
 				}
 			}
 		}
-
 		#endregion ShowLineNumbers
 
 		#region ToggleEditorOptionCommand
-
 		private DelegateCommand<object> _toggleEditorOptionCommand = null;
-
 		public ICommand ToggleEditorOptionCommand
 		{
 			get

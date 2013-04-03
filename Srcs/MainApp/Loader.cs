@@ -17,7 +17,8 @@ namespace MainApp
 	internal class Loader
 	{
 		private IUnityContainer _container = null;
-		private ILogger _logger = null;
+
+		//private ILogger _logger = null;
 
 		public Loader(IUnityContainer container)
 		{
@@ -32,6 +33,8 @@ namespace MainApp
 
 		private void InitializeCoreServices()
 		{
+			_container.RegisterType<IFileHistoryService, FileHistoryService>(new ContainerControlledLifetimeManager());
+
 			_container.RegisterType<IStateService, ApplicationStateService>(new ContainerControlledLifetimeManager());
 			_container.RegisterType<IThemeManager, ThemeManager>(new ContainerControlledLifetimeManager());
 			_container.RegisterType<ICommandManager, FirstPrismApp.Infrastructure.CommandManager>(new ContainerControlledLifetimeManager());
@@ -55,19 +58,23 @@ namespace MainApp
 			DelegateCommand closeCommand = new DelegateCommand(CloseCommand, CanClose);
 			DelegateCommand exitCommand = new DelegateCommand(ExitCommand);
 			DelegateCommand openCommand = new DelegateCommand(OpenDocument);
-
 			DelegateCommand viewFullSourceCommand = new DelegateCommand(ViewFullSource, CanViewFullSource);
+			DelegateCommand<object> openRecentFileCommand = new DelegateCommand<object>(OpenRecentDocument);
 
 			manager.RegisterCommand("OPEN", openCommand);
 			manager.RegisterCommand("CLOSE", closeCommand);
 			manager.RegisterCommand("EXIT", exitCommand);
 			manager.RegisterCommand("VIEWFULL", viewFullSourceCommand);
+			manager.RegisterCommand("OPENRECENT", openRecentFileCommand);
 			manager.Refresh();
 		}
+
+		#region command internals
 
 		private void LoadTheme()
 		{
 			IThemeManager manager = _container.Resolve<IThemeManager>();
+
 			//manager.AddTheme(new VS2010());
 			//manager.SetCurrent("VS2010");
 			//manager.AddTheme(new LightTheme());
@@ -103,15 +110,22 @@ namespace MainApp
 		{
 			var manager = _container.Resolve<Microsoft.Practices.Prism.Modularity.IModuleManager>();
 			if (manager != null)
-			{
 				manager.LoadModule("FullViewModule");
-			}
 		}
 
 		private bool CanViewFullSource()
 		{
 			return _container.Resolve<IStateService>().GetCurrentDocument() != null;
 		}
+
+		private void OpenRecentDocument(object file)
+		{
+			if (file == null) return;
+			IOpenFileService service = _container.Resolve<IOpenFileService>();
+			service.OpenFromID(file as string);
+		}
+
+		#endregion command internals
 
 		private void LoadMenus()
 		{
@@ -124,9 +138,12 @@ namespace MainApp
 														cmdManager.GetCommand("OPEN"), new KeyGesture(Key.O, ModifierKeys.Control, "Ctrl + O"))));
 			vm.Get("_File").Add((new MenuItemViewModel("_Close", 2, null, cmdManager.GetCommand("CLOSE"),
 																		new KeyGesture(Key.F4, ModifierKeys.Control, "Ctrl + F4"))));
+			vm.Get("_File").Add(new RecentMenuItemViewModel("Recent", 3, _container));
 			vm.Get("_File").Add(MenuItemViewModel.Separator(3));
 			vm.Get("_File").Add(new MenuItemViewModel("_Exit", 4, null, cmdManager.GetCommand("EXIT"), new KeyGesture(Key.F4, ModifierKeys.Alt, "Alt + F4"), false, _container));
 
+			//added for proper recent file loading and displaying features.
+			_container.Resolve<IFileHistoryService>().InitializeFromFile();
 
 			vm.Add(new MenuItemViewModel("_View", 2));
 			vm.Get("_View").Add((new MenuItemViewModel("_Full view", 1, null, cmdManager.GetCommand("VIEWFULL"),

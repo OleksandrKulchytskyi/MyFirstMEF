@@ -32,23 +32,49 @@ namespace OpenFileServiceModule
 				location = dialog.FileName;
 			}
 			else
-			{
 				result = true;
-			}
 
 			if (result == true && !string.IsNullOrWhiteSpace(location.ToString()))
 			{
-				_container.Resolve<IStateService>().AddToRecentAndSetCurrent(location.ToString());
-				DocumentLoadingEvent openValue = new DocumentLoadingEvent() { Path = location.ToString() };
+				string loc = location.ToString();
+				_container.Resolve<IStateService>().AddToRecentAndSetCurrent(loc);
+				IFileHistoryService serv = _container.Resolve<IFileHistoryService>();
+				if (serv.AddToRecent(loc))
+					serv.UpdateStorage().ContinueWith(prevTask =>
+					{
+						var exc = prevTask.Exception.Flatten().InnerException;
+						_container.Resolve<FirstPrismApp.Infrastructure.Base.ILogger>()
+							.Log(FirstPrismApp.Infrastructure.Base.LogSeverity.Error, exc.Message, exc);
+						prevTask.Dispose();
+					}, System.Threading.Tasks.TaskContinuationOptions.NotOnRanToCompletion);
+
+				DocumentLoadingEvent openValue = new DocumentLoadingEvent() { Path = loc };
 				_eventAggregator.GetEvent<DocumentLoadingEvent>().Publish(openValue);
-				return location.ToString();
+				return loc;
 			}
 			return string.Empty;
 		}
 
 		public string OpenFromID(string contentID)
 		{
-			throw new NotImplementedException();
+			if (!string.IsNullOrWhiteSpace(contentID))
+			{
+				_container.Resolve<IStateService>().AddToRecentAndSetCurrent(contentID);
+				IFileHistoryService serv = _container.Resolve<IFileHistoryService>();
+				if (serv.AddToRecent(contentID))
+					serv.UpdateStorage().ContinueWith(prevTask =>
+					{
+						var exc = prevTask.Exception.Flatten().InnerException;
+						_container.Resolve<FirstPrismApp.Infrastructure.Base.ILogger>()
+							.Log(FirstPrismApp.Infrastructure.Base.LogSeverity.Error, exc.Message, exc);
+						prevTask.Dispose();
+					}, System.Threading.Tasks.TaskContinuationOptions.NotOnRanToCompletion);
+
+				DocumentLoadingEvent openValue = new DocumentLoadingEvent() { Path = contentID };
+				_eventAggregator.GetEvent<DocumentLoadingEvent>().Publish(openValue);
+				return contentID;
+			}
+			return string.Empty;
 		}
 	}
 }

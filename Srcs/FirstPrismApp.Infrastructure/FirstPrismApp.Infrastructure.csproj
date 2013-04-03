@@ -74,6 +74,8 @@
     <Compile Include="Events\DocumentLoadedEvent.cs" />
     <Compile Include="Events\EntryChangedEvent.cs" />
     <Compile Include="Events\ThemeChangedEvent.cs" />
+    <Compile Include="Helpers\WeakEventHandlerAdvanced.cs" />
+    <Compile Include="Helpers\WeakEventHelper.cs" />
     <Compile Include="Menu\AbstractMenuItem.cs" />
     <Compile Include="Menu\MenuItemViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -91,6 +93,7 @@
     </Compile>
     <Compile Include="RegionConstants.cs" />
     <Compile Include="Services\IEntryContentService.cs" />
+    <Compile Include="Services\IFileHistoryService.cs" />
     <Compile Include="Services\IOpenFileService.cs" />
     <Compile Include="Services\IParsingService.cs" />
     <Compile Include="Services\IStateService.cs" />

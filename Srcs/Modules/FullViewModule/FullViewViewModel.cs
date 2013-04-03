@@ -27,6 +27,9 @@ namespace FullViewModule
 			_container = new GenericWeakReference<IUnityContainer>(cont);
 			_eventMgr = new GenericWeakReference<IEventAggregator>(eventAgg);
 
+			if (_container.IsAlive)
+				ToolbarViewModel = _container.Get().Resolve<IToolbarViewModel>();
+
 			if ((this.View as IWindow) != null)
 			{
 				(View as IWindow).Loaded += FullViewViewModel_Loaded;
@@ -46,8 +49,28 @@ namespace FullViewModule
 				DocumentPath = state.GetCurrentDocument();
 		}
 
-		#region Property IsDirty
+		#region Property ToolbarViewModel
+		private IToolbarViewModel _ToolbarViewModel;
+		public IToolbarViewModel ToolbarViewModel
+		{
+			get
+			{
+				return _ToolbarViewModel;
+			}
+			set
+			{
+				if (_ToolbarViewModel != value)
+				{
+					_ToolbarViewModel = value;
+					RaisePropertyChanged("ToolbarViewModel");
+				}
+			}
+		}
+		#endregion
 
+
+
+		#region Property IsDirty
 		private bool _IsDirty;
 
 		public bool IsDirty

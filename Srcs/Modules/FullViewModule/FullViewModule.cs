@@ -25,7 +25,9 @@ namespace FullViewModule
 					mapper.Map(_windowScope, typeof(FullViewWindow));
 
 				_weak.Get().RegisterType<IFullView, FullViewWindow>();
+				_weak.Get().RegisterType<IToolbarViewModel, ToolbarViewModel>();
 				_weak.Get().RegisterType<IFullViewViewModel, FullViewViewModel>();
+				
 
 				var vm = _weak.Get().Resolve<IFullViewViewModel>();
 
