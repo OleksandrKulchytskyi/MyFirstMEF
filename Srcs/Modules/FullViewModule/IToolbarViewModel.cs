@@ -94,7 +94,6 @@ namespace FullViewModule
 		{
 			//if (this.ActiveDocument != null)
 			//	return true;
-
 			//return false;
 			return true;
 		}
@@ -102,7 +101,6 @@ namespace FullViewModule
 		private void OnToggleEditorOption(object parameter)
 		{
 			//FileViewModel f = this.ActiveDocument;
-
 			if (parameter == null)
 				return;
 
@@ -125,7 +123,6 @@ namespace FullViewModule
 					break;
 			}
 		}
-
 		#endregion ToggleEditorOptionCommand
 	}
 }

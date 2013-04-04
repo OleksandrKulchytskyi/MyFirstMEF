@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace MainApp
 {
-	public class Bootstrapper : UnityBootstrapper
+	public sealed class Bootstrapper : UnityBootstrapper
 	{
 		protected override System.Windows.DependencyObject CreateShell()
 		{
@@ -20,6 +20,7 @@ namespace MainApp
 		{
 			base.InitializeShell();
 			App.Current.MainWindow = (Window)Shell;
+			App.Current.MainWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
 			App.Current.MainWindow.Show();
 		}
 

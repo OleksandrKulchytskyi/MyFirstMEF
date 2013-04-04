@@ -16,14 +16,16 @@ namespace FullViewModule
 	public sealed class FullViewViewModel : ViewModelBase, IFullViewViewModel, IDisposable
 	{
 		private readonly string[] _extensions = new string[4] { "txt", "log", "log4net", "dat" };
+		private readonly string _resourcePath;
 
 		private int disposed = 0;
 		private GenericWeakReference<IUnityContainer> _container = null;
-		
+
 		public FullViewViewModel(IFullView view, IUnityContainer cont)
 			: base(view)
 		{
 			_container = new GenericWeakReference<IUnityContainer>(cont);
+			_resourcePath = "FullViewModule.Highlightings.Default.xshd";
 
 			if (_container.IsAlive)
 				ToolbarViewModel = _container.Get().Resolve<IToolbarViewModel>();
@@ -69,7 +71,6 @@ namespace FullViewModule
 
 		#region Property IsDirty
 		private bool _IsDirty;
-
 		public bool IsDirty
 		{
 			get
@@ -85,13 +86,10 @@ namespace FullViewModule
 				}
 			}
 		}
-
 		#endregion Property IsDirty
 
 		#region Property DocumentPath
-
 		private string _DocumentPath;
-
 		public string DocumentPath
 		{
 			get
@@ -110,7 +108,7 @@ namespace FullViewModule
 						string ext = Path.GetExtension(_DocumentPath);
 						if (_extensions.Any(x => ext.IndexOf(x, StringComparison.OrdinalIgnoreCase) != -1))
 						{
-							using (Stream s = typeof(FullViewModule).Assembly.GetManifestResourceStream("FullViewModule.Highlightings.Default.xshd"))
+							using (Stream s = typeof(FullViewModule).Assembly.GetManifestResourceStream(_resourcePath))
 							{
 								using (var reader = new System.Xml.XmlTextReader(s))
 								{
@@ -130,13 +128,10 @@ namespace FullViewModule
 				}
 			}
 		}
-
 		#endregion Property DocumentPath
 
 		#region ContentId
-
 		private string _contentId = null;
-
 		public string ContentId
 		{
 			get { return _contentId; }
@@ -149,13 +144,10 @@ namespace FullViewModule
 				}
 			}
 		}
-
 		#endregion ContentId
 
 		#region TextContent
-
 		private TextDocument _document = null;
-
 		public TextDocument Document
 		{
 			get { return this._document; }
@@ -169,11 +161,9 @@ namespace FullViewModule
 				}
 			}
 		}
-
 		#endregion TextContent
 
 		#region DocumentName
-
 		public string DocumentName
 		{
 			get
@@ -184,13 +174,10 @@ namespace FullViewModule
 				return System.IO.Path.GetFileName(DocumentPath) + (IsDirty ? "*" : "");
 			}
 		}
-
 		#endregion DocumentName
 
 		#region HighlightingDefinition
-
 		private IHighlightingDefinition _highlightdef = null;
-
 		public IHighlightingDefinition HighlightDef
 		{
 			get { return this._highlightdef; }
@@ -204,11 +191,9 @@ namespace FullViewModule
 				}
 			}
 		}
-
 		#endregion HighlightingDefinition
 
 		#region Title
-
 		/// <summary>
 		/// Title is the string that is usually displayed - with or without dirty mark '*' - in the docking environment
 		/// </summary>
@@ -219,7 +204,6 @@ namespace FullViewModule
 				return System.IO.Path.GetFileName(this.DocumentPath) + (this.IsDirty == true ? "*" : string.Empty);
 			}
 		}
-
 		#endregion Title
 
 		public void Dispose()
