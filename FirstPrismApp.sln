@@ -31,6 +31,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullViewModule", "Srcs\Modu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "Srcs\TestProject\TestProject.csproj", "{D0C96BE3-CCFD-48FC-A97E-405296AD3471}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6CF8DE50-D3E0-4D13-A765-BDCBA9717E69}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,5 +108,8 @@ Global
 		{CE9C900C-A610-43B3-96D4-51FD4E4DE5F7} = {F6779D86-5213-4294-A9AC-6D25C9C3B661}
 		{4078D618-D58E-4E0D-8FCF-B03A26BBD37E} = {F6779D86-5213-4294-A9AC-6D25C9C3B661}
 		{E946BBBB-8994-4AE8-8867-C2F689B64449} = {1FBA29F2-A0B0-4E07-A8A2-BDE75B200D63}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

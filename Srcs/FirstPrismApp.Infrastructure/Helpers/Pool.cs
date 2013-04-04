@@ -10,7 +10,13 @@ namespace Core.Infrastructure.Helpers
 	/// <typeparam name="T">Type of stored objects</typeparam>
 	public abstract class Pool<T>
 	{
+		/// <summary>
+		/// concurrent stack object
+		/// </summary>
 		private readonly ConcurrentStack<PoolSlot<T>> _storage; // storing objects "in pool"
+		/// <summary>
+		/// lock free semaphore
+		/// </summary>
 		private readonly LockFreeSemaphore _allocSemaphore; // light semaphore for allocate operations
 
 		private int _currentCount;
