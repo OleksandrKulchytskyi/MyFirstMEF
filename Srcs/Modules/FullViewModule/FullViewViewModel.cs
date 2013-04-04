@@ -19,13 +19,11 @@ namespace FullViewModule
 
 		private int disposed = 0;
 		private GenericWeakReference<IUnityContainer> _container = null;
-		private GenericWeakReference<IEventAggregator> _eventMgr = null;
-
-		public FullViewViewModel(IFullView view, IEventAggregator eventAgg, IUnityContainer cont)
+		
+		public FullViewViewModel(IFullView view, IUnityContainer cont)
 			: base(view)
 		{
 			_container = new GenericWeakReference<IUnityContainer>(cont);
-			_eventMgr = new GenericWeakReference<IEventAggregator>(eventAgg);
 
 			if (_container.IsAlive)
 				ToolbarViewModel = _container.Get().Resolve<IToolbarViewModel>();
@@ -229,7 +227,6 @@ namespace FullViewModule
 			if (disposed == 1) return;
 			disposed = 1;
 
-			if (_eventMgr != null) _eventMgr = null;
 			if (_container != null) _container = null;
 			(View as IWindow).Loaded -= FullViewViewModel_Loaded;
 			(View as IWindow).Closing -= FullViewViewModel_Closing;
