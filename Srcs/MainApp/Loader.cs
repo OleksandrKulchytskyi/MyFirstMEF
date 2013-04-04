@@ -8,6 +8,7 @@ using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using System;
+using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -16,6 +17,7 @@ namespace MainApp
 {
 	internal class Loader
 	{
+		private int moduleLoaded = -1;
 		private IUnityContainer _container = null;
 
 		//private ILogger _logger = null;
@@ -108,9 +110,34 @@ namespace MainApp
 
 		private void ViewFullSource()
 		{
-			var manager = _container.Resolve<Microsoft.Practices.Prism.Modularity.IModuleManager>();
-			if (manager != null)
-				manager.LoadModule("FullViewModule");
+			if (moduleLoaded < 0)
+			{
+				var manager = _container.Resolve<Microsoft.Practices.Prism.Modularity.IModuleManager>();
+				if (manager != null)
+				{
+					manager.LoadModule("FullViewModule");
+					moduleLoaded = 1;
+				}
+			}
+			else
+			{
+				var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(a => a.FullName.IndexOf("FullViewModule", StringComparison.OrdinalIgnoreCase) != -1);
+				if (assembly != null)
+				{
+					Type t = assembly.GetTypes().FirstOrDefault(x => x.Name.Equals("IFullViewViewModel", StringComparison.OrdinalIgnoreCase));
+					if (t != null)
+					{
+						IViewModel vm = _container.Resolve(t) as IViewModel;
+						(vm.View as IWindow).Owner = System.Windows.Application.Current.MainWindow;
+						(vm.View as IWindow).WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner;
+						(vm.View as IWindow).Title = "Full view";
+						(vm.View as IWindow).WindowStyle = System.Windows.WindowStyle.ToolWindow;
+						(vm.View as IWindow).Show();
+						(vm.View as IWindow).Show();
+						vm = null;
+					}
+				}
+			}
 		}
 
 		private bool CanViewFullSource()
