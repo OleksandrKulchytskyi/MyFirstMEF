@@ -104,7 +104,7 @@ namespace Core.Infrastructure.Helpers
 
 		public override string ToString()
 		{
-			return string.Format("{0}: {1}/{2}", typeof(LockFreeSemaphore).Name, _currentCount, _maxCount);
+			return string.Format("{0}: current:{1}/max:{2}", typeof(LockFreeSemaphore).Name, _currentCount, _maxCount);
 		}
 	}
 }
