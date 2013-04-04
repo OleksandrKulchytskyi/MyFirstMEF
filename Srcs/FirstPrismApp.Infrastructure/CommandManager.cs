@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 
-namespace FirstPrismApp.Infrastructure
+namespace Core.Infrastructure
 {
 	public interface ICommandManager
 	{

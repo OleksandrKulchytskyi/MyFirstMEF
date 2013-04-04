@@ -1,9 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">   
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/FirstPrismApp.Infrastructure;component/Styles/DarkColors.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/FirstPrismApp.Infrastructure;component/Styles/Button.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/FirstPrismApp.Infrastructure;component/Styles/WindowCommands.xaml" />
-        <ResourceDictionary Source="pack://application:,,,/FirstPrismApp.Infrastructure;component/Styles/Menu.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Core.Infrastructure;component/Styles/DarkColors.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Core.Infrastructure;component/Styles/Button.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Core.Infrastructure;component/Styles/WindowCommands.xaml" />
+        <ResourceDictionary Source="pack://application:,,,/Core.Infrastructure;component/Styles/Menu.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

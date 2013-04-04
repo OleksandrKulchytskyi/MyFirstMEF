@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FirstPrismApp.Infrastructure.Events
+namespace Core.Infrastructure.Events
 {
 	public sealed class CloseDocumentEvent : CompositePresentationEvent<CloseDocumentEvent>
 	{

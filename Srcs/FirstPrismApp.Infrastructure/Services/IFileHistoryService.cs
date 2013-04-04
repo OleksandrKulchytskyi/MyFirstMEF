@@ -1,4 +1,4 @@
-﻿using FirstPrismApp.Infrastructure.Helpers;
+﻿using Core.Infrastructure.Helpers;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FirstPrismApp.Infrastructure.Services
+namespace Core.Infrastructure.Services
 {
 	public interface IFileHistoryService
 	{

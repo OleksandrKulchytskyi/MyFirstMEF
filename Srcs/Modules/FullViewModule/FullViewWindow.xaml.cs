@@ -1,5 +1,5 @@
-﻿using FirstPrismApp.Infrastructure;
-using FirstPrismApp.Infrastructure.Base;
+﻿using Core.Infrastructure;
+using Core.Infrastructure.Base;
 using System.Windows;
 
 namespace FullViewModule

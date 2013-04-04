@@ -1,11 +1,11 @@
-﻿using FirstPrismApp.Infrastructure.Base;
+﻿using Core.Infrastructure.Base;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FirstPrismApp.Infrastructure.Services
+namespace Core.Infrastructure.Services
 {
 	public sealed class WindowMapper : IWindowMapper
 	{

@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace FirstPrismApp.Infrastructure.Base
+namespace Core.Infrastructure.Base
 {
 	public interface IPrioritizedTree<T>
 	{

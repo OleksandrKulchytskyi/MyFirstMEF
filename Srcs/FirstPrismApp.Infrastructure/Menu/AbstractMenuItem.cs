@@ -1,11 +1,11 @@
-﻿using FirstPrismApp.Infrastructure.Base;
+﻿using Core.Infrastructure.Base;
 using Microsoft.Practices.Unity;
 using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace FirstPrismApp.Infrastructure.Menu
+namespace Core.Infrastructure.Menu
 {
 	public abstract class AbstractMenuItem : AbstractCommandable
 	{

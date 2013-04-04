@@ -1,6 +1,6 @@
-﻿using FirstPrismApp.Infrastructure;
-using FirstPrismApp.Infrastructure.Base;
-using FirstPrismApp.Infrastructure.Menu;
+﻿using Core.Infrastructure;
+using Core.Infrastructure.Base;
+using Core.Infrastructure.Menu;
 using System.Collections.Generic;
 
 namespace ToolbarModule

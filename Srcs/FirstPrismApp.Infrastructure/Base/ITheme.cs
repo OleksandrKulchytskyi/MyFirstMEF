@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FirstPrismApp.Infrastructure.Base
+namespace Core.Infrastructure.Base
 {
 	/// <summary>
 	/// You can register a theme adding it to the list of themes in theme manager

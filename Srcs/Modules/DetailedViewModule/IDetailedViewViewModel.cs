@@ -1,5 +1,5 @@
 ﻿using Business.Common;
-using FirstPrismApp.Infrastructure;
+using Core.Infrastructure;
 
 namespace DetailedViewModule
 {

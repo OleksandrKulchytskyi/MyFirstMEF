@@ -1,4 +1,4 @@
-﻿using FirstPrismApp.Infrastructure.Base;
+﻿using Core.Infrastructure.Base;
 using System.ComponentModel.Composition;
 using System.Windows;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FirstPrismApp.Infrastructure.Base
+namespace Core.Infrastructure.Base
 {
 	public enum LogSeverity
 	{

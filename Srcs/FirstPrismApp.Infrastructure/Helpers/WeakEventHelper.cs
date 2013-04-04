@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Reflection;
 
-namespace FirstPrismApp.Infrastructure.Helpers
+namespace Core.Infrastructure.Helpers
 {
 	public delegate void UnregisterWeakCallback<E>(EventHandler<E> eventhandler) where E : EventArgs;
 
@@ -141,10 +141,8 @@ namespace FirstPrismApp.Infrastructure.Helpers
 			});
 
 			IWeakEventHandler<E> weh = (IWeakEventHandler<E>)wehConstructor.Invoke(new object[] { eventHandler, unregister });
-
 			return weh.Handler;
 		}
-
 		#endregion EventHandler<E> extensions
 	}
 

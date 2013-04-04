@@ -1,4 +1,4 @@
-﻿using FirstPrismApp.Infrastructure.Base;
+﻿using Core.Infrastructure.Base;
 using log4net;
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿using FirstPrismApp.Infrastructure;
+﻿using Core.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +25,7 @@ namespace DetailedViewModule
 			InitializeComponent();
 		}
 
-		public FirstPrismApp.Infrastructure.IViewModel ViewModel
+		public Core.Infrastructure.IViewModel ViewModel
 		{
 			get
 			{

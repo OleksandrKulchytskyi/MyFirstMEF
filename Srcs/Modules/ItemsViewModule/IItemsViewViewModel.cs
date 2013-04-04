@@ -1,5 +1,5 @@
 ﻿using Business.Common;
-using FirstPrismApp.Infrastructure;
+using Core.Infrastructure;
 using System.Collections.ObjectModel;
 
 namespace ItemsViewModule

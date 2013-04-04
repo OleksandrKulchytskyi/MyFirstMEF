@@ -1,4 +1,4 @@
-﻿using FirstPrismApp.Infrastructure;
+﻿using Core.Infrastructure;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 

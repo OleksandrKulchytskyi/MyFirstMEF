@@ -1,4 +1,4 @@
-﻿using FirstPrismApp.Infrastructure.Services;
+﻿using Core.Infrastructure.Services;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 
@@ -15,7 +15,7 @@ namespace OpenFileServiceModule
 
 		public void Initialize()
 		{
-			_container.RegisterType<IOpenFileService, OpenFileService>(new ContainerControlledLifetimeManager());
+			_container.RegisterType<IOpenFileService, OpenFileService>();
 		}
 	}
 }

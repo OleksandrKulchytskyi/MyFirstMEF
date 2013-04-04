@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FirstPrismApp.Infrastructure.Services
+namespace Core.Infrastructure.Services
 {
 	public interface IParsingService
 	{

@@ -1,5 +1,5 @@
-﻿using FirstPrismApp.Infrastructure.Events;
-using FirstPrismApp.Infrastructure.Services;
+﻿using Core.Infrastructure.Events;
+using Core.Infrastructure.Services;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using Microsoft.Win32;
@@ -43,8 +43,8 @@ namespace OpenFileServiceModule
 					serv.UpdateStorage().ContinueWith(prevTask =>
 					{
 						var exc = prevTask.Exception.Flatten().InnerException;
-						_container.Resolve<FirstPrismApp.Infrastructure.Base.ILogger>()
-							.Log(FirstPrismApp.Infrastructure.Base.LogSeverity.Error, exc.Message, exc);
+						_container.Resolve<Core.Infrastructure.Base.ILogger>()
+							.Log(Core.Infrastructure.Base.LogSeverity.Error, exc.Message, exc);
 						prevTask.Dispose();
 					}, System.Threading.Tasks.TaskContinuationOptions.NotOnRanToCompletion);
 
@@ -65,8 +65,8 @@ namespace OpenFileServiceModule
 					serv.UpdateStorage().ContinueWith(prevTask =>
 					{
 						var exc = prevTask.Exception.Flatten().InnerException;
-						_container.Resolve<FirstPrismApp.Infrastructure.Base.ILogger>()
-							.Log(FirstPrismApp.Infrastructure.Base.LogSeverity.Error, exc.Message, exc);
+						_container.Resolve<Core.Infrastructure.Base.ILogger>()
+							.Log(Core.Infrastructure.Base.LogSeverity.Error, exc.Message, exc);
 						prevTask.Dispose();
 					}, System.Threading.Tasks.TaskContinuationOptions.NotOnRanToCompletion);
 

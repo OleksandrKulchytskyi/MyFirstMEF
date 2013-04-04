@@ -1,4 +1,4 @@
-﻿using FirstPrismApp.Infrastructure;
+﻿using Core.Infrastructure;
 
 namespace DetailedViewModule
 {

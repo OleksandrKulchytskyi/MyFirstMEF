@@ -1,8 +1,8 @@
 ﻿using Business.Common;
-using FirstPrismApp.Infrastructure;
-using FirstPrismApp.Infrastructure.Base;
-using FirstPrismApp.Infrastructure.Events;
-using FirstPrismApp.Infrastructure.Services;
+using Core.Infrastructure;
+using Core.Infrastructure.Base;
+using Core.Infrastructure.Events;
+using Core.Infrastructure.Services;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using System;

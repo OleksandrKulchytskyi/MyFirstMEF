@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 
-namespace FirstPrismApp.Infrastructure.Base
+namespace Core.Infrastructure.Base
 {
 	public abstract class AbstractPrioritizedTree<T> : ViewModelBase, IPrioritizedTree<T>
 	  where T : IPrioritizedTree<T>

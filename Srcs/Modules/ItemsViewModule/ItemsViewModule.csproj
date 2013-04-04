@@ -95,9 +95,9 @@
       <Project>{e946bbbb-8994-4ae8-8867-c2f689b64449}</Project>
       <Name>Business.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\FirstPrismApp.Infrastructure\FirstPrismApp.Infrastructure.csproj">
+    <ProjectReference Include="..\..\FirstPrismApp.Infrastructure\Core.Infrastructure.csproj">
       <Project>{cc00fb09-42cf-4290-87d9-b9893456acf4}</Project>
-      <Name>FirstPrismApp.Infrastructure</Name>
+      <Name>Core.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

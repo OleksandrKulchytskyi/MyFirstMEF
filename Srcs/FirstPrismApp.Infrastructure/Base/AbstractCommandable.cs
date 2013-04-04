@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace FirstPrismApp.Infrastructure.Base
+namespace Core.Infrastructure.Base
 {
 	public class AbstractCommandable : AbstractPrioritizedTree<AbstractCommandable>, ICommandable
 	{

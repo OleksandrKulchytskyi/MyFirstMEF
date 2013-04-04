@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LogParsingModule
 {
-	public class LogParser : FirstPrismApp.Infrastructure.Services.IParsingService
+	public class LogParser : Core.Infrastructure.Services.IParsingService
 	{
 		private const string _oneSpace = " ";
 		public static IList<string> Msgs = new List<string>(4) { "INFO", "WARN", "ERROR", "FATAL" };

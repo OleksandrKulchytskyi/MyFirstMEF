@@ -1,6 +1,6 @@
-﻿using FirstPrismApp.Infrastructure;
-using FirstPrismApp.Infrastructure.Base;
-using FirstPrismApp.Infrastructure.Services;
+﻿using Core.Infrastructure;
+using Core.Infrastructure.Base;
+using Core.Infrastructure.Services;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Utils;
@@ -67,7 +67,6 @@ namespace FullViewModule
 			}
 		}
 		#endregion
-
 
 
 		#region Property IsDirty

@@ -24,7 +24,7 @@ namespace ItemsViewModule
 			InitializeComponent();
 		}
 
-		public FirstPrismApp.Infrastructure.IViewModel ViewModel
+		public Core.Infrastructure.IViewModel ViewModel
 		{
 			get
 			{

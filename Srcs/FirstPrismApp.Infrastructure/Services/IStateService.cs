@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace FirstPrismApp.Infrastructure.Services
+namespace Core.Infrastructure.Services
 {
 	public interface IStateService
 	{

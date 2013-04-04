@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace FirstPrismApp.Infrastructure
+namespace Core.Infrastructure
 {
 	public class ViewModelBase : IViewModel, INotifyPropertyChanged
 	{

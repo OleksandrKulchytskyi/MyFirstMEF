@@ -1,9 +1,9 @@
-﻿using FirstPrismApp.Infrastructure;
-using FirstPrismApp.Infrastructure.Base;
-using FirstPrismApp.Infrastructure.Events;
-using FirstPrismApp.Infrastructure.Menu;
-using FirstPrismApp.Infrastructure.Services;
-using FirstPrismApp.Infrastructure.Themes;
+﻿using Core.Infrastructure;
+using Core.Infrastructure.Base;
+using Core.Infrastructure.Events;
+using Core.Infrastructure.Menu;
+using Core.Infrastructure.Services;
+using Core.Infrastructure.Themes;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
@@ -37,7 +37,7 @@ namespace MainApp
 
 			_container.RegisterType<IStateService, ApplicationStateService>(new ContainerControlledLifetimeManager());
 			_container.RegisterType<IThemeManager, ThemeManager>(new ContainerControlledLifetimeManager());
-			_container.RegisterType<ICommandManager, FirstPrismApp.Infrastructure.CommandManager>(new ContainerControlledLifetimeManager());
+			_container.RegisterType<ICommandManager, Core.Infrastructure.CommandManager>(new ContainerControlledLifetimeManager());
 			_container.RegisterType<AbstractMenuItem, MenuItemViewModel>(new ContainerControlledLifetimeManager(),
 																		new InjectionConstructor(new InjectionParameter(typeof(string), "$MAIN$"),
 																		new InjectionParameter(typeof(int), 1),

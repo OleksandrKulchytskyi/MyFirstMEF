@@ -1,5 +1,5 @@
-﻿using FirstPrismApp.Infrastructure;
-using FirstPrismApp.Infrastructure.Base;
+﻿using Core.Infrastructure;
+using Core.Infrastructure.Base;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using System.Windows.Input;

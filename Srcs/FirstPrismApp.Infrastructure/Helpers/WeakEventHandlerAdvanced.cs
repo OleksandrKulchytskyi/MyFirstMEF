@@ -3,7 +3,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Threading;
 
-namespace FirstPrismApp.Infrastructure.Helpers
+namespace Core.Infrastructure.Helpers
 {
 	public class WeakEventHandlerAdvanced<E> where E : EventArgs
 	{

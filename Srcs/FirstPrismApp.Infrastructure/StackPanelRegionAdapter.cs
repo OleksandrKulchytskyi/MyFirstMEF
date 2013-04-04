@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace FirstPrismApp.Infrastructure
+namespace Core.Infrastructure
 {
 	public class StackPanelRegionAdapter : RegionAdapterBase<StackPanel>
 	{

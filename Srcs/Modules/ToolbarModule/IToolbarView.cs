@@ -1,4 +1,4 @@
-﻿using FirstPrismApp.Infrastructure;
+﻿using Core.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;

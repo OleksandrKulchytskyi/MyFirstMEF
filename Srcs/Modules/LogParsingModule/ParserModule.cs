@@ -1,4 +1,4 @@
-﻿using FirstPrismApp.Infrastructure.Services;
+﻿using Core.Infrastructure.Services;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
 

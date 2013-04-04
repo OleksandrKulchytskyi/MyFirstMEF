@@ -1,4 +1,4 @@
-﻿namespace FirstPrismApp.Infrastructure
+﻿namespace Core.Infrastructure
 {
 	public interface IView
 	{

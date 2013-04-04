@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FirstPrismApp.Infrastructure.Base
+namespace Core.Infrastructure.Base
 {
 	public sealed class GenericWeakReference<T>
 	{

@@ -1,5 +1,5 @@
-﻿using FirstPrismApp.Infrastructure.Base;
-using FirstPrismApp.Infrastructure.Services;
+﻿using Core.Infrastructure.Base;
+using Core.Infrastructure.Services;
 using Microsoft.Practices.Unity;
 using System.IO;
 using System.Text;

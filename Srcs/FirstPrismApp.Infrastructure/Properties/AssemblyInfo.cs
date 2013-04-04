@@ -5,11 +5,11 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FirstPrismApp.Infrastructure")]
+[assembly: AssemblyTitle("Core.Infrastructure")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Aricent")]
-[assembly: AssemblyProduct("FirstPrismApp.Infrastructure")]
+[assembly: AssemblyProduct("Core.Infrastructure")]
 [assembly: AssemblyCopyright("Copyright © Aricent 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

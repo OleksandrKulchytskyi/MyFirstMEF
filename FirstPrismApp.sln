@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainApp", "Srcs\MainApp\MainApp.csproj", "{EDC6C5E9-5DD2-4E82-ABA1-5D9F8B7792D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirstPrismApp.Infrastructure", "Srcs\FirstPrismApp.Infrastructure\FirstPrismApp.Infrastructure.csproj", "{CC00FB09-42CF-4290-87D9-B9893456ACF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Infrastructure", "Srcs\FirstPrismApp.Infrastructure\Core.Infrastructure.csproj", "{CC00FB09-42CF-4290-87D9-B9893456ACF4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{F6779D86-5213-4294-A9AC-6D25C9C3B661}"
 EndProject

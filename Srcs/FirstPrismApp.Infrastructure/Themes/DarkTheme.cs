@@ -1,8 +1,8 @@
-﻿using FirstPrismApp.Infrastructure.Base;
+﻿using Core.Infrastructure.Base;
 using System;
 using System.Collections.Generic;
 
-namespace FirstPrismApp.Infrastructure.Themes
+namespace Core.Infrastructure.Themes
 {
 	public sealed class DarkTheme : ITheme
 	{
@@ -14,7 +14,7 @@ namespace FirstPrismApp.Infrastructure.Themes
 			this.UriList.Add(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"));
 			this.UriList.Add(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml"));
 			this.UriList.Add(new Uri("pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml"));
-			this.UriList.Add(new Uri("pack://application:,,,/FirstPrismApp.Infrastructure;component/Styles/DarkTheme.xaml"));
+			this.UriList.Add(new Uri("pack://application:,,,/Core.Infrastructure;component/Styles/DarkTheme.xaml"));
 		}
 
 		public IList<Uri> UriList { get; internal set; }

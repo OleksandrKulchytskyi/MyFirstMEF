@@ -1,11 +1,11 @@
-﻿using FirstPrismApp.Infrastructure.Base;
-using FirstPrismApp.Infrastructure.Events;
+﻿using Core.Infrastructure.Base;
+using Core.Infrastructure.Events;
 using Microsoft.Practices.Prism.Events;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 
-namespace FirstPrismApp.Infrastructure.Services
+namespace Core.Infrastructure.Services
 {
 	public sealed class ThemeManager : IThemeManager
 	{
