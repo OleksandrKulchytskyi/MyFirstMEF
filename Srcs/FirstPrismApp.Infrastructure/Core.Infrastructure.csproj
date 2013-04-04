@@ -74,6 +74,11 @@
     <Compile Include="Events\DocumentLoadedEvent.cs" />
     <Compile Include="Events\EntryChangedEvent.cs" />
     <Compile Include="Events\ThemeChangedEvent.cs" />
+    <Compile Include="Helpers\IPoolSlotHolder.cs" />
+    <Compile Include="Helpers\LockFreeSemaphore.cs" />
+    <Compile Include="Helpers\Pool.cs" />
+    <Compile Include="Helpers\PoolEx.cs" />
+    <Compile Include="Helpers\PoolSlot.cs" />
     <Compile Include="Helpers\WeakEventHandlerAdvanced.cs" />
     <Compile Include="Helpers\WeakEventHelper.cs" />
     <Compile Include="Menu\AbstractMenuItem.cs" />

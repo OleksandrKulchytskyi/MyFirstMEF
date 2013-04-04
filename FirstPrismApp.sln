@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerModule", "Srcs\Module
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FullViewModule", "Srcs\Modules\FullViewModule\FullViewModule.csproj", "{4078D618-D58E-4E0D-8FCF-B03A26BBD37E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "Srcs\TestProject\TestProject.csproj", "{D0C96BE3-CCFD-48FC-A97E-405296AD3471}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{4078D618-D58E-4E0D-8FCF-B03A26BBD37E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4078D618-D58E-4E0D-8FCF-B03A26BBD37E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4078D618-D58E-4E0D-8FCF-B03A26BBD37E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0C96BE3-CCFD-48FC-A97E-405296AD3471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0C96BE3-CCFD-48FC-A97E-405296AD3471}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0C96BE3-CCFD-48FC-A97E-405296AD3471}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0C96BE3-CCFD-48FC-A97E-405296AD3471}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
