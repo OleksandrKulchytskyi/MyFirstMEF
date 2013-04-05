@@ -40,6 +40,8 @@ namespace FullViewModule
 		private void FullViewViewModel_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			Dispose();
+			if (!System.Windows.Application.Current.MainWindow.IsActive)
+				System.Windows.Application.Current.MainWindow.Activate();
 		}
 
 		private void FullViewViewModel_Loaded(object sender, System.Windows.RoutedEventArgs e)
