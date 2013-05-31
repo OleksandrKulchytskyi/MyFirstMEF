@@ -32,7 +32,7 @@
         <xctk:BusyIndicator IsBusy="{Binding Path=IsBusy,UpdateSourceTrigger=PropertyChanged}" BusyContent="Parsing document..." >
         </xctk:BusyIndicator>
 
-        <ListBox ItemsSource="{Binding Path=Entries, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{DynamicResource DefTempl}"
+		<ListBox ItemsSource="{Binding Path=VirtColl, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{DynamicResource DefTempl}"
                  IsSynchronizedWithCurrentItem="True" VirtualizingStackPanel.IsVirtualizing="True" SelectedItem="{Binding Path=SelectedEntry, Mode=TwoWay}">
         </ListBox>
     </Grid>

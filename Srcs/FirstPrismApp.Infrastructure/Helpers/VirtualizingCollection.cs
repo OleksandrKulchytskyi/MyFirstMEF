@@ -107,7 +107,6 @@ namespace Core.Infrastructure.Helpers
 		#region Count
 
 		private int _count = -1;
-
 		/// <summary>
 		/// Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
 		/// The first time this property is accessed, it will fetch the count from the IItemsProvider.
@@ -131,11 +130,9 @@ namespace Core.Infrastructure.Helpers
 				_count = value;
 			}
 		}
-
 		#endregion Count
 
 		#region Indexer
-
 		/// <summary>
 		/// Gets the item at the specified index. This property will fetch
 		/// the corresponding page from the IItemsProvider if required.
@@ -164,8 +161,7 @@ namespace Core.Infrastructure.Helpers
 				CleanUpPages();
 
 				// defensive check in case of async load
-				if (_pages[pageIndex] == null)
-					return default(T);
+				if (_pages[pageIndex] == null) return default(T);
 
 				// return requested item
 				return _pages[pageIndex][pageOffset];
@@ -178,11 +174,9 @@ namespace Core.Infrastructure.Helpers
 			get { return this[index]; }
 			set { throw new NotSupportedException(); }
 		}
-
 		#endregion Indexer
 
 		#region IEnumerator<T>, IEnumerator
-
 		/// <summary>
 		/// Returns an enumerator that iterates through the collection.
 		/// </summary>
@@ -210,11 +204,9 @@ namespace Core.Infrastructure.Helpers
 		{
 			return GetEnumerator();
 		}
-
 		#endregion IEnumerator<T>, IEnumerator
 
 		#region Add
-
 		/// <summary>
 		/// Not supported.
 		/// </summary>
@@ -231,11 +223,9 @@ namespace Core.Infrastructure.Helpers
 		{
 			throw new NotSupportedException();
 		}
-
 		#endregion Add
 
 		#region Contains
-
 		bool IList.Contains(object value)
 		{
 			return Contains((T)value);
@@ -252,10 +242,7 @@ namespace Core.Infrastructure.Helpers
 		{
 			return false;
 		}
-
 		#endregion Contains
-
-		#region Clear
 
 		/// <summary>
 		/// Not supported.
@@ -265,12 +252,9 @@ namespace Core.Infrastructure.Helpers
 		/// </exception>
 		public void Clear()
 		{
-			throw new NotSupportedException();
+			if (_pages != null) _pages.Clear();
+			if (_pageTouchTimes != null) _pageTouchTimes.Clear();
 		}
-
-		#endregion Clear
-
-		#region IndexOf
 
 		int IList.IndexOf(object value)
 		{
@@ -289,10 +273,7 @@ namespace Core.Infrastructure.Helpers
 			return -1;
 		}
 
-		#endregion IndexOf
-
 		#region Insert
-
 		/// <summary>
 		/// Not supported.
 		/// </summary>
@@ -313,11 +294,9 @@ namespace Core.Infrastructure.Helpers
 		{
 			Insert(index, (T)value);
 		}
-
 		#endregion Insert
 
 		#region Remove
-
 		/// <summary>
 		/// Not supported.
 		/// </summary>
@@ -352,11 +331,9 @@ namespace Core.Infrastructure.Helpers
 		{
 			throw new NotSupportedException();
 		}
-
 		#endregion Remove
 
 		#region CopyTo
-
 		/// <summary>
 		/// Not supported.
 		/// </summary>
@@ -386,11 +363,9 @@ namespace Core.Infrastructure.Helpers
 		{
 			throw new NotSupportedException();
 		}
-
 		#endregion CopyTo
 
 		#region Misc
-
 		/// <summary>
 		/// Gets an object that can be used to synchronize access to the <see cref="T:System.Collections.ICollection"/>.
 		/// </summary>
@@ -435,13 +410,10 @@ namespace Core.Infrastructure.Helpers
 		{
 			get { return false; }
 		}
-
 		#endregion Misc
-
 		#endregion IList<T>, IList
 
 		#region Paging
-
 		private readonly Dictionary<int, IList<T>> _pages = new Dictionary<int, IList<T>>();
 		private readonly Dictionary<int, DateTime> _pageTouchTimes = new Dictionary<int, DateTime>();
 

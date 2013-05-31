@@ -21,5 +21,7 @@ namespace Core.Infrastructure.Base
 		/// <param name="count">The number of items to fetch.</param>
 		/// <returns></returns>
 		IList<T> FetchRange(int startIndex, int count);
+
+		void SetSource(string fPath);
 	}
 }

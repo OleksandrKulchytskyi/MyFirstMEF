@@ -1,5 +1,6 @@
 ﻿using Business.Common;
 using Core.Infrastructure;
+using Core.Infrastructure.Helpers;
 using Core.Infrastructure.Base;
 using Core.Infrastructure.Events;
 using Core.Infrastructure.Services;
@@ -63,6 +64,28 @@ namespace ItemsViewModule
 			}
 		}
 
+
+		#region Property VirtColl
+		private VirtualizingCollection<LogItem> _VirtColl;
+		public VirtualizingCollection<LogItem> VirtColl
+		{
+			get
+			{
+				return _VirtColl;
+			}
+			set
+			{
+				if (_VirtColl != value)
+				{
+					_VirtColl = value;
+					RaisePropertyChanged("VirtColl");
+				}
+			}
+		}
+		#endregion
+
+
+
 		private bool _IsBusy;
 		public bool IsBusy
 		{
@@ -87,7 +110,13 @@ namespace ItemsViewModule
 			{
 				_container.Resolve<ILogger>().Log(LogSeverity.Info, string.Format("Begin load document: {0}", args.Path), null);
 				System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
+
 				IParsingService service = _container.Resolve<IParsingService>();
+
+				IItemsProvider<LogItem> itemsProvider = _container.Resolve<IItemsProvider<LogItem>>();
+				itemsProvider.SetSource(args.Path);
+				VirtColl = new VirtualizingCollection<LogItem>(itemsProvider);
+
 				Entries = new ObservableCollection<LogItem>(service.ParseLog(args.Path));
 				_container.Resolve<IStateService>().AddToRecentAndSetCurrent(args.Path);
 				_container.Resolve<ICommandManager>().Refresh();
@@ -106,7 +135,10 @@ namespace ItemsViewModule
 		private void OnClosingDocument(CloseDocumentEvent args)
 		{
 			_container.Resolve<ILogger>().Log(LogSeverity.Info, string.Format("Begin document close operation: {0}", args.PathToDocument), null);
+
 			Entries.Clear();
+			VirtColl.Clear();
+
 			_container.Resolve<ICommandManager>().Refresh();
 		}
 

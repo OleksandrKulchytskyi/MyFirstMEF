@@ -14,10 +14,16 @@ namespace LogParsingModule
 		private int _count;
 		private IList<int> _items;
 
+		[Microsoft.Practices.Unity.InjectionConstructor()]
+		public LogEntriesProvider()
+		{
+			_count = -1;
+		}
+
 		public LogEntriesProvider(string fileName)
+			: this()
 		{
 			_fPath = fileName;
-			_count = -1;
 		}
 
 		public int FetchCount()
@@ -26,6 +32,11 @@ namespace LogParsingModule
 				FetchInternal(out _items);
 
 			return _count;
+		}
+
+		public void SetSource(string filePath)
+		{
+			_fPath = filePath;
 		}
 
 		private void FetchInternal(out IList<int> items)
