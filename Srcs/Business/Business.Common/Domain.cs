@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Business.Common
 {
-	public class EntityBase:INotifyPropertyChanged
+	public class EntityBase : INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -25,7 +25,7 @@ namespace Business.Common
 		public string Severity { get; set; }
 	}
 
-	public class LogEntryDescription:EntityBase
+	public class LogEntryDescription : EntityBase
 	{
 		#region Property Severity
 		private string _Severity;
@@ -45,8 +45,6 @@ namespace Business.Common
 			}
 		}
 		#endregion
-
-		
 
 		public DateTime Time { get; set; }
 
@@ -68,7 +66,5 @@ namespace Business.Common
 			}
 		}
 		#endregion
-
-		
 	}
 }

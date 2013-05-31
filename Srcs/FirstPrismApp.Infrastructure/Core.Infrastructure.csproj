@@ -63,6 +63,7 @@
     <Compile Include="Base\AbstractPrioritizedTree.cs" />
     <Compile Include="Base\GenericWeakReference.cs" />
     <Compile Include="Base\ICommandable.cs" />
+    <Compile Include="Base\IItemsProvider.cs" />
     <Compile Include="Base\ILogger.cs" />
     <Compile Include="Base\IPrioritizedTree.cs" />
     <Compile Include="Base\ITheme.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Helpers\Pool.cs" />
     <Compile Include="Helpers\PoolEx.cs" />
     <Compile Include="Helpers\PoolSlot.cs" />
+    <Compile Include="Helpers\VirtualizingCollection.cs" />
     <Compile Include="Helpers\WeakEventHandlerAdvanced.cs" />
     <Compile Include="Helpers\WeakEventHelper.cs" />
     <Compile Include="Menu\AbstractMenuItem.cs" />

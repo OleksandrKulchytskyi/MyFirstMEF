@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EntryContentService.cs" />
+    <Compile Include="LogEntriesProvider.cs" />
     <Compile Include="LogParser.cs" />
     <Compile Include="ParserModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
