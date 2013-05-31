@@ -64,7 +64,8 @@ namespace Core.Infrastructure.Helpers
 				oldValue = _currentCount;
 				newValue = oldValue - 1;
 				if (newValue < 0) return false;
-			} while (Interlocked.CompareExchange(ref _currentCount, newValue, oldValue) != oldValue);
+			}
+			while (Interlocked.CompareExchange(ref _currentCount, newValue, oldValue) != oldValue);
 			return true;
 		}
 
@@ -78,9 +79,9 @@ namespace Core.Infrastructure.Helpers
 			{
 				oldValue = _currentCount;
 				newValue = oldValue + 1;
-				if (newValue > _maxCount)
-					throw new SemaphoreFullException();
-			} while (Interlocked.CompareExchange(ref _currentCount, newValue, oldValue) != oldValue);
+				if (newValue > _maxCount) throw new SemaphoreFullException();
+			}
+			while (Interlocked.CompareExchange(ref _currentCount, newValue, oldValue) != oldValue);
 		}
 
 		/// <summary>
@@ -97,9 +98,9 @@ namespace Core.Infrastructure.Helpers
 			{
 				oldValue = _currentCount;
 				newValue = oldValue + releaseCount;
-				if (newValue > _maxCount)
-					throw new SemaphoreFullException();
-			} while (Interlocked.CompareExchange(ref _currentCount, newValue, oldValue) != oldValue);
+				if (newValue > _maxCount) throw new SemaphoreFullException();
+			} 
+			while (Interlocked.CompareExchange(ref _currentCount, newValue, oldValue) != oldValue);
 		}
 
 		public override string ToString()

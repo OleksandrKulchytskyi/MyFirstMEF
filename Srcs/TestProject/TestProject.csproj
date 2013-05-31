@@ -53,11 +53,20 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PollTest.cs" />
+    <Compile Include="LogEntriesProviderUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Business\Business.Common\Business.Common.csproj">
+      <Project>{e946bbbb-8994-4ae8-8867-c2f689b64449}</Project>
+      <Name>Business.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FirstPrismApp.Infrastructure\Core.Infrastructure.csproj">
       <Project>{cc00fb09-42cf-4290-87d9-b9893456acf4}</Project>
       <Name>Core.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Modules\LogParsingModule\LogParsingModule.csproj">
+      <Project>{95d77b2a-8c35-41b5-ba42-e4bdd12bf636}</Project>
+      <Name>LogParsingModule</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

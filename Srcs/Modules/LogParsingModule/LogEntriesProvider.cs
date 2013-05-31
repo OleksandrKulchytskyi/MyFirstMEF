@@ -23,9 +23,7 @@ namespace LogParsingModule
 		public int FetchCount()
 		{
 			if (_count == -1)
-			{
 				FetchInternal(out _items);
-			}
 
 			return _count;
 		}
@@ -39,7 +37,7 @@ namespace LogParsingModule
 			using (StreamReader sr = new StreamReader(_fPath, true))
 			{
 				string line = null;
-				int lineNumber = 1;
+				int lineNumber = 0;
 				Severity severity = Severity.None;
 				bool found = false;
 				_count = 0;
@@ -47,14 +45,12 @@ namespace LogParsingModule
 				{
 					lineNumber++;
 
-					if (string.IsNullOrEmpty(line))
-						continue;
+					if (string.IsNullOrEmpty(line)) continue;
 
-					if (found && !LogParser.IsMessageBegin(line, out severity))
-						continue;
+					if (found && !LogParser.IsMessageBegin(line, out severity)) continue;
 
 					else if (found && LogParser.IsMessageBegin(line, out severity))
-						found = false; severity = Severity.None;
+						found = false;
 
 					found = LogParser.IsMessageBegin(line, out severity);
 					if (found)
@@ -63,7 +59,7 @@ namespace LogParsingModule
 						_count++;
 					}
 				}
-			}
+			}//end using scope
 		}
 
 		public IList<LogItem> FetchRange(int startIndex, int count)
@@ -73,6 +69,12 @@ namespace LogParsingModule
 
 		private IList<LogItem> FetchChunk(int startIndx, int count)
 		{
+			if (_count == -1)//difence check
+				FetchInternal(out _items);
+
+			if (startIndx < 0)
+				throw new IndexOutOfRangeException("startIndx parameter must be equals or great than zero.");
+
 			if (!File.Exists(_fPath))
 				throw new FileNotFoundException("File wasn't found.", _fPath);
 
@@ -82,22 +84,25 @@ namespace LogParsingModule
 			using (StreamReader sr = new StreamReader(_fPath, true))
 			{
 				string line = null;
-				int lineNumber = 1;
+				int lineNumber = 0;
 				Severity severity = Severity.None;
 				bool found = false;
-				_count = 0;
+				int retrieved = 0;
+				int atPos = _items[startIndx];
+
+				while ((lineNumber != (atPos == 0 ? atPos : atPos - 1)) && ((line = sr.ReadLine()) != null))//skip first lines if startIndex > 0
+					lineNumber++;
+
 				while ((line = sr.ReadLine()) != null)
 				{
 					lineNumber++;
 
-					if (string.IsNullOrEmpty(line))
-						continue;
+					if (string.IsNullOrEmpty(line)) continue;
 
-					if (found && !LogParser.IsMessageBegin(line, out severity))
-						continue;
+					if (found && !LogParser.IsMessageBegin(line, out severity)) continue;
 
 					else if (found && LogParser.IsMessageBegin(line, out severity))
-						found = false; severity = Severity.None;
+						found = false;
 
 					found = LogParser.IsMessageBegin(line, out severity);
 					if (found)
@@ -107,10 +112,12 @@ namespace LogParsingModule
 						item.LineNumber = lineNumber;
 						item.Time = LogParser.ExtractTime(line);
 						entries.Add(item);
-						_count++;
+						retrieved++;
 					}
+					if (count == retrieved)
+						break;
 				}
-			}
+			}//end using
 			return entries;
 		}
 	}
