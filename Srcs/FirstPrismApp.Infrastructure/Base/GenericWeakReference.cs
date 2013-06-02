@@ -23,11 +23,20 @@ namespace Core.Infrastructure.Base
 			return (T)_weak.Target;
 		}
 
+		public T Target
+		{
+			get
+			{
+				return (T)_weak.Target;
+			}
+		}
+
 		public bool IsAlive
 		{
 			get
 			{
-				return _weak.IsAlive;
+				T target = (T)_weak.Target;
+				return (_weak.IsAlive && target != null);
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Core.Infrastructure.Helpers
@@ -64,6 +65,20 @@ namespace Core.Infrastructure.Helpers
 			if (TryAllocatePop(out slot))
 				return slot;
 			return WaitPop();
+		}
+
+		/// <summary>
+		/// Gets available object's slot from pool or creates new one.
+		/// </summary>
+		/// <returns>Pool slot</returns>
+		public IList<PoolSlot<T>> TakeSlots(int count)
+		{
+			List<PoolSlot<T>> inner = new List<PoolSlot<T>>(count);
+			for (int i = 0; i < count; i++)
+			{
+				inner.Add(TakeSlot());
+			}
+			return inner;
 		}
 
 		/// <summary>

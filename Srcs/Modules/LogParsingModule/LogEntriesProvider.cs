@@ -1,5 +1,7 @@
 ﻿using Business.Common;
 using Core.Infrastructure.Base;
+using Core.Infrastructure.Helpers;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,15 +13,18 @@ namespace LogParsingModule
 		private string _fPath;
 		private int _count;
 		private IList<int> _items;
+		private GenericWeakReference<LogItemsPool> _poolWeak;
 
-		[Microsoft.Practices.Unity.InjectionConstructor()]
-		public LogEntriesProvider()
+		[InjectionConstructor()]
+		public LogEntriesProvider(IUnityContainer container)
 		{
 			_count = -1;
+			if (container != null)
+				_poolWeak = new GenericWeakReference<LogItemsPool>(container.Resolve<LogItemsPool>());
 		}
 
-		public LogEntriesProvider(string fileName)
-			: this()
+		public LogEntriesProvider(string fileName, IUnityContainer container)
+			: this(container)
 		{
 			_fPath = fileName;
 		}
@@ -87,8 +92,13 @@ namespace LogParsingModule
 			if (!File.Exists(_fPath))
 				throw new FileNotFoundException("File wasn't found.", _fPath);
 
-			List<LogItem> entries = new List<LogItem>();
-			LogItem item = null;
+			IList<PoolSlot<LogItem>> slots = null;
+			List<LogItem> entries = null;
+
+			if (_poolWeak != null && _poolWeak.IsAlive != null)
+				slots = _poolWeak.Target.TakeSlots(count);
+			else
+				entries = new List<LogItem>();
 
 			using (StreamReader sr = new StreamReader(_fPath, true))
 			{
@@ -116,11 +126,9 @@ namespace LogParsingModule
 					found = LogParser.IsMessageBegin(line, out severity);
 					if (found)
 					{
-						item = new LogItem();
-						item.Severity = severity.ToString();
-						item.LineNumber = lineNumber;
-						item.Time = LogParser.ExtractTime(line);
-						entries.Add(item);
+						slots[retrieved].Object.Severity = severity.ToString();
+						slots[retrieved].Object.LineNumber = lineNumber;
+						slots[retrieved].Object.Time = LogParser.ExtractTime(line);
 						retrieved++;
 					}
 					if (count == retrieved)
