@@ -1,5 +1,6 @@
 ﻿using Business.Common;
 using Core.Infrastructure.Base;
+using Core.Infrastructure.Helpers;
 using Core.Infrastructure.Services;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Unity;
@@ -18,6 +19,9 @@ namespace LogParsingModule
 		public void Initialize()
 		{
 			_container.RegisterType<IParsingService, LogParser>();
+
+			_container.RegisterType<LogItemsPool, LogItemsPool>(new ContainerControlledLifetimeManager(),
+				new InjectionConstructor(new InjectionParameter(typeof(int), 100)));
 			_container.RegisterType<IEntryContentService, EntryContentService>();
 			_container.RegisterType<IItemsProvider<LogItem>, LogEntriesProvider>();
 		}

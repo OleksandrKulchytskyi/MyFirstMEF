@@ -33,7 +33,8 @@
         </xctk:BusyIndicator>
 
 		<ListBox ItemsSource="{Binding Path=VirtColl, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{DynamicResource DefTempl}"
-                 IsSynchronizedWithCurrentItem="True" VirtualizingStackPanel.IsVirtualizing="True" SelectedItem="{Binding Path=SelectedEntry, Mode=TwoWay}">
+				 IsSynchronizedWithCurrentItem="True" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling"
+				 SelectedItem="{Binding Path=SelectedEntry, Mode=TwoWay}">
         </ListBox>
     </Grid>
 </UserControl>

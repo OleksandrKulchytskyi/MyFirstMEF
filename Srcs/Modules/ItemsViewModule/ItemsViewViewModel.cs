@@ -1,13 +1,12 @@
 ﻿using Business.Common;
 using Core.Infrastructure;
-using Core.Infrastructure.Helpers;
 using Core.Infrastructure.Base;
 using Core.Infrastructure.Events;
+using Core.Infrastructure.Helpers;
 using Core.Infrastructure.Services;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Unity;
 using System;
-using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace ItemsViewModule
@@ -30,6 +29,7 @@ namespace ItemsViewModule
 		}
 
 		private LogItem _SelectedEntry;
+
 		public LogItem SelectedEntry
 		{
 			get
@@ -47,26 +47,25 @@ namespace ItemsViewModule
 			}
 		}
 
-		private ObservableCollection<LogItem> _Entries;
-		public ObservableCollection<LogItem> Entries
-		{
-			get
-			{
-				return _Entries;
-			}
-			set
-			{
-				if (_Entries != value)
-				{
-					_Entries = value;
-					RaisePropertyChanged("Entries");
-				}
-			}
-		}
+		//private ObservableCollection<LogItem> _Entries;
+		//public ObservableCollection<LogItem> Entries
+		//{
+		//	get
+		//	{
+		//		return _Entries;
+		//	}
+		//	set
+		//	{
+		//		if (_Entries != value)
+		//		{
+		//			_Entries = value;
+		//			RaisePropertyChanged("Entries");
+		//		}
+		//	}
+		//}
 
-
-		#region Property VirtColl
 		private VirtualizingCollection<LogItem> _VirtColl;
+
 		public VirtualizingCollection<LogItem> VirtColl
 		{
 			get
@@ -82,11 +81,9 @@ namespace ItemsViewModule
 				}
 			}
 		}
-		#endregion
-
-
 
 		private bool _IsBusy;
+
 		public bool IsBusy
 		{
 			get
@@ -117,7 +114,7 @@ namespace ItemsViewModule
 				itemsProvider.SetSource(args.Path);
 				VirtColl = new VirtualizingCollection<LogItem>(itemsProvider);
 
-				Entries = new ObservableCollection<LogItem>(service.ParseLog(args.Path));
+				//Entries = new ObservableCollection<LogItem>(service.ParseLog(args.Path));
 				_container.Resolve<IStateService>().AddToRecentAndSetCurrent(args.Path);
 				_container.Resolve<ICommandManager>().Refresh();
 			}
@@ -136,7 +133,7 @@ namespace ItemsViewModule
 		{
 			_container.Resolve<ILogger>().Log(LogSeverity.Info, string.Format("Begin document close operation: {0}", args.PathToDocument), null);
 
-			Entries.Clear();
+			//Entries.Clear();
 			VirtColl.Clear();
 
 			_container.Resolve<ICommandManager>().Refresh();

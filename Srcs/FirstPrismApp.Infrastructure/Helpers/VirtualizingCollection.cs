@@ -1,4 +1,5 @@
-﻿using Core.Infrastructure.Base;
+﻿using Business.Common;
+using Core.Infrastructure.Base;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -89,7 +90,7 @@ namespace Core.Infrastructure.Helpers
 
 		#region PageTimeout
 
-		private readonly long _pageTimeout = 10000;
+		private readonly long _pageTimeout = 8000;
 
 		/// <summary>
 		/// Gets the page timeout.
@@ -424,10 +425,10 @@ namespace Core.Infrastructure.Helpers
 		{
 			List<int> keys = new List<int>(_pageTouchTimes.Keys);
 			foreach (int key in keys)
-			{
-				// page 0 is a special case, since WPF ItemsControl access the first item frequently
+			{	// page 0 is a special case, since WPF ItemsControl access the first item frequently
 				if (key != 0 && (DateTime.Now - _pageTouchTimes[key]).TotalMilliseconds > PageTimeout)
 				{
+					IList<T> items = _pages[key];
 					_pages.Remove(key);
 					_pageTouchTimes.Remove(key);
 					Trace.WriteLine("Removed Page: " + key);

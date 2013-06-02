@@ -1,5 +1,6 @@
-﻿using Core.Infrastructure;
-using Microsoft.Practices.Prism.Events;
+﻿using Business.Common;
+using Core.Infrastructure;
+using Core.Infrastructure.Helpers;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
@@ -9,10 +10,10 @@ namespace ItemsViewModule
 {
 	public sealed class ItemsViewModule : IModule, IDisposable
 	{
-		int disposed = 0;
+		private int disposed = 0;
 		private IUnityContainer _container;
 		private IRegionManager _manager;
-				
+
 		public ItemsViewModule(IUnityContainer cont, IRegionManager manager)
 		{
 			_container = cont;
@@ -27,11 +28,10 @@ namespace ItemsViewModule
 			IRegion region = _manager.Regions[RegionConstants.ItemsRegion];
 
 			var vm = _container.Resolve<IItemsViewViewModel>();
-			vm.Entries = new System.Collections.ObjectModel.ObservableCollection<Business.Common.LogItem>();
+			//vm.Entries = new System.Collections.ObjectModel.ObservableCollection<Business.Common.LogItem>();
 			region.Add(vm.View);
 		}
 
-		
 		public void Dispose()
 		{
 			if (disposed == 1) return;
