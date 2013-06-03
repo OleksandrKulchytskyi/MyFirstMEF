@@ -1,6 +1,4 @@
-﻿using Business.Common;
-using Core.Infrastructure;
-using Core.Infrastructure.Helpers;
+﻿using Core.Infrastructure;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;

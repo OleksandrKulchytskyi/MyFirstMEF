@@ -71,7 +71,7 @@ namespace LogParsingModule
 						items.Add(lineNumber);
 						_count++;
 					}
-				}
+				}//end while
 			}//end using scope
 		}
 
@@ -82,7 +82,7 @@ namespace LogParsingModule
 
 		private IList<PoolSlot<LogItem>> FetchChunk(int startIndx, int count)
 		{
-			if (_count == -1)//difence check
+			if (_count == -1)//difensive check in case when FetchCount method wasn't invoked
 				FetchInternal(out _items);
 
 			if (startIndx < 0)
@@ -92,12 +92,8 @@ namespace LogParsingModule
 				throw new FileNotFoundException("File wasn't found.", _fPath);
 
 			IList<PoolSlot<LogItem>> slots = null;
-			List<LogItem> entries = null;
-
 			if (_poolWeak != null && _poolWeak.IsAlive)
 				slots = _poolWeak.Target.TakeSlots(count);
-			else
-				entries = new List<LogItem>();
 
 			using (StreamReader sr = new StreamReader(_fPath, true))
 			{
@@ -132,8 +128,8 @@ namespace LogParsingModule
 					}
 					if (count == retrieved)
 						break;
-				}
-			}//end using
+				}//end while
+			}//end using sr
 			return slots;
 		}
 	}

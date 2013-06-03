@@ -95,8 +95,7 @@ namespace Core.Infrastructure.Helpers
 		#endregion PageSize
 
 		#region PageTimeout
-
-		private readonly long _pageTimeout = 7000;
+		private readonly long _pageTimeout = 9000;
 
 		/// <summary>
 		/// Gets the page timeout.
@@ -106,13 +105,11 @@ namespace Core.Infrastructure.Helpers
 		{
 			get { return _pageTimeout; }
 		}
-
 		#endregion PageTimeout
 
 		#region IList<T>, IList
 
 		#region Count
-
 		private int _count = -1;
 
 		/// <summary>
@@ -138,11 +135,9 @@ namespace Core.Infrastructure.Helpers
 				_count = value;
 			}
 		}
-
 		#endregion Count
 
 		#region Indexer
-
 		/// <summary>
 		/// Gets the item at the specified index. This property will fetch
 		/// the corresponding page from the IItemsProvider if required.
@@ -155,7 +150,6 @@ namespace Core.Infrastructure.Helpers
 				// determine which page and offset within page
 				int pageIndex = index / PageSize;
 				int pageOffset = index % PageSize;
-
 				// request primary page
 				RequestPage(pageIndex);
 
@@ -169,10 +163,8 @@ namespace Core.Infrastructure.Helpers
 
 				// remove stale pages
 				CleanUpPages();
-
 				// defensive check in case of async load
 				if (_pages[pageIndex] == null) return default(T);
-
 				// return requested item
 				return _pages[pageIndex][pageOffset].Object;
 			}
@@ -184,11 +176,9 @@ namespace Core.Infrastructure.Helpers
 			get { return this[index]; }
 			set { throw new NotSupportedException(); }
 		}
-
 		#endregion Indexer
 
 		#region IEnumerator<T>, IEnumerator
-
 		/// <summary>
 		/// Returns an enumerator that iterates through the collection.
 		/// </summary>
@@ -216,11 +206,9 @@ namespace Core.Infrastructure.Helpers
 		{
 			return GetEnumerator();
 		}
-
 		#endregion IEnumerator<T>, IEnumerator
 
 		#region Add
-
 		/// <summary>
 		/// Not supported.
 		/// </summary>
@@ -294,7 +282,6 @@ namespace Core.Infrastructure.Helpers
 		}
 
 		#region Insert
-
 		/// <summary>
 		/// Not supported.
 		/// </summary>
@@ -315,11 +302,9 @@ namespace Core.Infrastructure.Helpers
 		{
 			Insert(index, (T)value);
 		}
-
 		#endregion Insert
 
 		#region Remove
-
 		/// <summary>
 		/// Not supported.
 		/// </summary>
@@ -354,11 +339,9 @@ namespace Core.Infrastructure.Helpers
 		{
 			throw new NotSupportedException();
 		}
-
 		#endregion Remove
 
 		#region CopyTo
-
 		/// <summary>
 		/// Not supported.
 		/// </summary>
@@ -441,7 +424,7 @@ namespace Core.Infrastructure.Helpers
 
 		#endregion IList<T>, IList
 
-		#region Paging
+		#region Paging region
 		private readonly Dictionary<int, IList<PoolSlot<T>>> _pages = new Dictionary<int, IList<PoolSlot<T>>>();
 		private readonly Dictionary<int, DateTime> _pageTouchTimes = new Dictionary<int, DateTime>();
 		private int _populatedPages = 0;
@@ -453,14 +436,15 @@ namespace Core.Infrastructure.Helpers
 		public void CleanUpPages()
 		{
 			List<int> keys = new List<int>(_pageTouchTimes.Keys);
+			LogItemsPool pool = _container.Resolve<LogItemsPool>();
+			IList<PoolSlot<T>> slots;
 			foreach (int key in keys)
 			{	// page 0 is a special case, since WPF ItemsControl access the first item frequently
-				if (key == 0 || key == _currentPageIndx ||
+				if ((key == 0 || key == _currentPageIndx) ||
 					(DateTime.Now - _pageTouchTimes[key]).TotalMilliseconds < PageTimeout)//add check for current page index for eliminating key was not found exception
 					continue;
 
-				LogItemsPool pool = _container.Resolve<LogItemsPool>();
-				IList<PoolSlot<T>> slots = _pages[key];
+				slots = _pages[key];
 				_pages.Remove(key);
 				_pageTouchTimes.Remove(key);
 				foreach (PoolSlot<T> slot in slots)
@@ -490,11 +474,11 @@ namespace Core.Infrastructure.Helpers
 		protected virtual void RequestPage(int pageIndex)
 		{
 			if (!_pages.ContainsKey(pageIndex))
-			{
+			{	// if we reached limit of 5 cached pages, we need to erase one of them
 				if (System.Threading.Interlocked.CompareExchange(ref _populatedPages, 5, 5) == 5)
 				{
 					List<int> keys = new List<int>(_pageTouchTimes.Keys);
-					//maybe it would be preferable to add in search criteria time search
+					//maybe it would be preferable to add in search criterias additional one by time search 
 					int minIndx = keys.Where(x => x != 0 && x != _currentPageIndx).Min();
 
 					IList<PoolSlot<T>> slots = _pages[minIndx];
@@ -560,6 +544,7 @@ namespace Core.Infrastructure.Helpers
 		}
 		#endregion Fetch methods
 
+		#region IDisposable members
 		public void Dispose()
 		{
 			this.Dispose(true);
@@ -572,10 +557,11 @@ namespace Core.Infrastructure.Helpers
 				return;
 
 			List<int> keys = new List<int>(_pageTouchTimes.Keys);
+			LogItemsPool pool = _container.Resolve<LogItemsPool>();
+			IList<PoolSlot<T>> slots;
 			foreach (int key in keys)
 			{
-				LogItemsPool pool = _container.Resolve<LogItemsPool>();
-				IList<PoolSlot<T>> slots = _pages[key];
+				slots = _pages[key];
 				_pages.Remove(key);
 				_pageTouchTimes.Remove(key);
 				foreach (PoolSlot<T> slot in slots)
@@ -585,6 +571,7 @@ namespace Core.Infrastructure.Helpers
 				Trace.WriteLine("Dsiposing " + key);
 			}
 			_isDisposed = true;
-		}
+		} 
+		#endregion
 	}
 }
