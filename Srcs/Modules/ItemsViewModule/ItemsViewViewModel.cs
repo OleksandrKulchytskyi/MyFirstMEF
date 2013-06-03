@@ -105,7 +105,7 @@ namespace ItemsViewModule
 			IsBusy = true;
 			try
 			{
-				_container.Resolve<ILogger>().Log(LogSeverity.Info, string.Format("Begin load document: {0}", args.Path), null);
+				_container.Resolve<ILogger>().Log(LogSeverity.Info, string.Format("Begin to load document: {0}", args.Path), null);
 				System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(500));
 
 				IParsingService service = _container.Resolve<IParsingService>();

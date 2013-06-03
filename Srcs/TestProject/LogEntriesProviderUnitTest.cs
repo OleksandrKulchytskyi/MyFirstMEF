@@ -22,6 +22,7 @@ namespace TestProject
 		{
 			string path = @"D:\MyProj\github\Sharedeployed\ShareDeployed\ShareDeployed.Proxy.WpfTest\bin\Debug\Log\Wpferror.log";
 			LogEntriesProvider provider = new LogEntriesProvider(container);
+			provider.SetSource(path);
 			int count = provider.FetchCount();
 			Assert.IsTrue(count > 500);
 			var range50 = provider.FetchRange(0, 10);
