@@ -5,36 +5,36 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d">
-    <Grid>
-        <Grid.Resources>
-            <DataTemplate x:Key="DefTempl">
-                <StackPanel Orientation="Horizontal"> 
-                    <Image x:Name="img"></Image>
-                    <TextBlock Text="{Binding Path=LineNumber, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBlock Text="{Binding Path=Severity, UpdateSourceTrigger=PropertyChanged}"/>
-                </StackPanel>
-                <DataTemplate.Triggers>
-                    <DataTrigger Binding="{Binding Path=Severity}" Value="Info">
-                        <Setter TargetName="img"  Property="Source" Value="pack://application:,,,/MainApp;component/Icons/Info.ico"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding Path=Severity}" Value="Warn">
-                        <Setter TargetName="img"  Property="Source" Value="pack://application:,,,/MainApp;component/Icons/Warn.ico"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding Path=Severity}" Value="Error">
-                        <Setter TargetName="img"  Property="Source" Value="pack://application:,,,/MainApp;component/Icons/Error.ico"/>
-                    </DataTrigger>
-                    <DataTrigger Binding="{Binding Path=Severity}" Value="Fatal">
-                        <Setter TargetName="img"  Property="Source" Value="pack://application:,,,/MainApp;component/Icons/Fatal.ico"/>
-                    </DataTrigger>
-                </DataTemplate.Triggers>
-            </DataTemplate>
-        </Grid.Resources>
-        <xctk:BusyIndicator IsBusy="{Binding Path=IsBusy,UpdateSourceTrigger=PropertyChanged}" BusyContent="Parsing document..." >
-        </xctk:BusyIndicator>
+	<Grid>
+		<Grid.Resources>
+			<DataTemplate x:Key="DefTempl">
+				<StackPanel Orientation="Horizontal">
+					<Image x:Name="img"></Image>
+					<TextBlock Text="{Binding Path=LineNumber, UpdateSourceTrigger=PropertyChanged}"/>
+					<TextBlock Text="{Binding Path=Severity, UpdateSourceTrigger=PropertyChanged}"/>
+				</StackPanel>
+				<DataTemplate.Triggers>
+					<DataTrigger Binding="{Binding Path=Severity}" Value="Info">
+						<Setter TargetName="img"  Property="Source" Value="pack://application:,,,/MainApp;component/Icons/Info.ico"/>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding Path=Severity}" Value="Warn">
+						<Setter TargetName="img"  Property="Source" Value="pack://application:,,,/MainApp;component/Icons/Warn.ico"/>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding Path=Severity}" Value="Error">
+						<Setter TargetName="img"  Property="Source" Value="pack://application:,,,/MainApp;component/Icons/Error.ico"/>
+					</DataTrigger>
+					<DataTrigger Binding="{Binding Path=Severity}" Value="Fatal">
+						<Setter TargetName="img"  Property="Source" Value="pack://application:,,,/MainApp;component/Icons/Fatal.ico"/>
+					</DataTrigger>
+				</DataTemplate.Triggers>
+			</DataTemplate>
+		</Grid.Resources>
+		<xctk:BusyIndicator IsBusy="{Binding Path=IsBusy,UpdateSourceTrigger=PropertyChanged}" BusyContent="Parsing document..." >
+		</xctk:BusyIndicator>
 
-		<ListBox ItemsSource="{Binding Path=VirtColl, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{DynamicResource DefTempl}"
-				 IsSynchronizedWithCurrentItem="True" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling"
-				 SelectedItem="{Binding Path=SelectedEntry, Mode=TwoWay}">
-        </ListBox>
-    </Grid>
+		<ListBox ItemsSource="{Binding Path=VirtColletion, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{DynamicResource DefTempl}"
+				 SelectedItem="{Binding Path=SelectedEntry, Mode=TwoWay}" IsSynchronizedWithCurrentItem="True" 
+				 VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling">
+		</ListBox>
+	</Grid>
 </UserControl>

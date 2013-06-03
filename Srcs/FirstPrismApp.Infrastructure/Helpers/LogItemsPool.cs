@@ -17,14 +17,6 @@ namespace Core.Infrastructure.Helpers
 			TryAllocatePush(initialCount);
 		}
 
-		public void ReleaseBulk(IEnumerable<PoolSlot<LogItem>> items)
-		{
-			foreach (var item in items)
-			{
-				Release(item);
-			}
-		}
-
 		protected override LogItem ObjectConstructor()
 		{
 			return new LogItem();
@@ -35,6 +27,22 @@ namespace Core.Infrastructure.Helpers
 			base.CleanUp(@object);
 			@object.LineNumber = 0;
 			@object.Severity = string.Empty;
+		}
+
+		public void ReleaseBulk(IEnumerable<PoolSlot<LogItem>> items)
+		{
+			foreach (var item in items)
+			{
+				Release(item);
+			}
+		}
+
+		public void ReleaseBulk(IList<PoolSlot<LogItem>> items)
+		{
+			foreach (var item in items)
+			{
+				Release(item);
+			}
 		}
 	}
 }

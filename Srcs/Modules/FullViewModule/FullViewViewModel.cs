@@ -123,6 +123,7 @@ namespace FullViewModule
 							using (StreamReader reader = FileReader.OpenStream(fs, Encoding.UTF8))
 							{
 								Document = new TextDocument(reader.ReadToEnd());
+								System.Diagnostics.Trace.WriteLine("Text Document reached generation: " + GC.GetGeneration(_document));
 							}
 						}
 						ContentId = _DocumentPath;

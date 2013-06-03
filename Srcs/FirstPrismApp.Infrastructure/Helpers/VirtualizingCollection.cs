@@ -1,9 +1,11 @@
 ﻿using Business.Common;
 using Core.Infrastructure.Base;
+using Microsoft.Practices.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Core.Infrastructure.Helpers
 {
@@ -19,8 +21,11 @@ namespace Core.Infrastructure.Helpers
 	/// data bound to a suitable ItemsControl.
 	/// </remarks>
 	/// <typeparam name="T"></typeparam>
-	public class VirtualizingCollection<T> : IList<T>, IList
+	public class VirtualizingCollection<T> : IList<T>, IList, IDisposable
 	{
+		private IUnityContainer _container;
+		protected bool _isDisposed = false;
+
 		#region Constructors
 
 		/// <summary>
@@ -51,9 +56,10 @@ namespace Core.Infrastructure.Helpers
 		/// Initializes a new instance of the <see cref="VirtualizingCollection&lt;T&gt;"/> class.
 		/// </summary>
 		/// <param name="itemsProvider">The items provider.</param>
-		public VirtualizingCollection(IItemsProvider<T> itemsProvider)
+		public VirtualizingCollection(IItemsProvider<T> itemsProvider, IUnityContainer container)
 		{
 			_itemsProvider = itemsProvider;
+			_container = container;
 		}
 
 		#endregion Constructors
@@ -90,7 +96,7 @@ namespace Core.Infrastructure.Helpers
 
 		#region PageTimeout
 
-		private readonly long _pageTimeout = 8000;
+		private readonly long _pageTimeout = 7000;
 
 		/// <summary>
 		/// Gets the page timeout.
@@ -108,6 +114,7 @@ namespace Core.Infrastructure.Helpers
 		#region Count
 
 		private int _count = -1;
+
 		/// <summary>
 		/// Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
 		/// The first time this property is accessed, it will fetch the count from the IItemsProvider.
@@ -131,9 +138,11 @@ namespace Core.Infrastructure.Helpers
 				_count = value;
 			}
 		}
+
 		#endregion Count
 
 		#region Indexer
+
 		/// <summary>
 		/// Gets the item at the specified index. This property will fetch
 		/// the corresponding page from the IItemsProvider if required.
@@ -165,7 +174,7 @@ namespace Core.Infrastructure.Helpers
 				if (_pages[pageIndex] == null) return default(T);
 
 				// return requested item
-				return _pages[pageIndex][pageOffset];
+				return _pages[pageIndex][pageOffset].Object;
 			}
 			set { throw new NotSupportedException(); }
 		}
@@ -175,9 +184,11 @@ namespace Core.Infrastructure.Helpers
 			get { return this[index]; }
 			set { throw new NotSupportedException(); }
 		}
+
 		#endregion Indexer
 
 		#region IEnumerator<T>, IEnumerator
+
 		/// <summary>
 		/// Returns an enumerator that iterates through the collection.
 		/// </summary>
@@ -205,9 +216,11 @@ namespace Core.Infrastructure.Helpers
 		{
 			return GetEnumerator();
 		}
+
 		#endregion IEnumerator<T>, IEnumerator
 
 		#region Add
+
 		/// <summary>
 		/// Not supported.
 		/// </summary>
@@ -224,9 +237,11 @@ namespace Core.Infrastructure.Helpers
 		{
 			throw new NotSupportedException();
 		}
+
 		#endregion Add
 
 		#region Contains
+
 		bool IList.Contains(object value)
 		{
 			return Contains((T)value);
@@ -243,6 +258,7 @@ namespace Core.Infrastructure.Helpers
 		{
 			return false;
 		}
+
 		#endregion Contains
 
 		/// <summary>
@@ -253,8 +269,11 @@ namespace Core.Infrastructure.Helpers
 		/// </exception>
 		public void Clear()
 		{
-			if (_pages != null) _pages.Clear();
-			if (_pageTouchTimes != null) _pageTouchTimes.Clear();
+			//TODO: return poolable objects back to the slots
+			if (_pages != null)
+				_pages.Clear();
+			if (_pageTouchTimes != null)
+				_pageTouchTimes.Clear();
 		}
 
 		int IList.IndexOf(object value)
@@ -275,6 +294,7 @@ namespace Core.Infrastructure.Helpers
 		}
 
 		#region Insert
+
 		/// <summary>
 		/// Not supported.
 		/// </summary>
@@ -295,9 +315,11 @@ namespace Core.Infrastructure.Helpers
 		{
 			Insert(index, (T)value);
 		}
+
 		#endregion Insert
 
 		#region Remove
+
 		/// <summary>
 		/// Not supported.
 		/// </summary>
@@ -332,9 +354,11 @@ namespace Core.Infrastructure.Helpers
 		{
 			throw new NotSupportedException();
 		}
+
 		#endregion Remove
 
 		#region CopyTo
+
 		/// <summary>
 		/// Not supported.
 		/// </summary>
@@ -364,9 +388,11 @@ namespace Core.Infrastructure.Helpers
 		{
 			throw new NotSupportedException();
 		}
+
 		#endregion CopyTo
 
 		#region Misc
+
 		/// <summary>
 		/// Gets an object that can be used to synchronize access to the <see cref="T:System.Collections.ICollection"/>.
 		/// </summary>
@@ -412,11 +438,14 @@ namespace Core.Infrastructure.Helpers
 			get { return false; }
 		}
 		#endregion Misc
+
 		#endregion IList<T>, IList
 
 		#region Paging
-		private readonly Dictionary<int, IList<T>> _pages = new Dictionary<int, IList<T>>();
+		private readonly Dictionary<int, IList<PoolSlot<T>>> _pages = new Dictionary<int, IList<PoolSlot<T>>>();
 		private readonly Dictionary<int, DateTime> _pageTouchTimes = new Dictionary<int, DateTime>();
+		private int _populatedPages = 0;
+		private int _currentPageIndx = -1;
 
 		/// <summary>
 		/// Cleans up any stale pages that have not been accessed in the period dictated by PageTimeout.
@@ -426,13 +455,18 @@ namespace Core.Infrastructure.Helpers
 			List<int> keys = new List<int>(_pageTouchTimes.Keys);
 			foreach (int key in keys)
 			{	// page 0 is a special case, since WPF ItemsControl access the first item frequently
-				if (key != 0 && (DateTime.Now - _pageTouchTimes[key]).TotalMilliseconds > PageTimeout)
-				{
-					IList<T> items = _pages[key];
-					_pages.Remove(key);
-					_pageTouchTimes.Remove(key);
-					Trace.WriteLine("Removed Page: " + key);
-				}
+				if (key == 0 || key == _currentPageIndx ||
+					(DateTime.Now - _pageTouchTimes[key]).TotalMilliseconds < PageTimeout)//add check for current page index for eliminating key was not found exception
+					continue;
+
+				LogItemsPool pool = _container.Resolve<LogItemsPool>();
+				IList<PoolSlot<T>> slots = _pages[key];
+				_pages.Remove(key);
+				_pageTouchTimes.Remove(key);
+				foreach (PoolSlot<T> slot in slots)
+					pool.Release(slot as PoolSlot<LogItem>);
+				System.Threading.Interlocked.Decrement(ref _populatedPages);
+				Trace.WriteLine("Removed Page: " + key);
 			}
 		}
 
@@ -441,7 +475,7 @@ namespace Core.Infrastructure.Helpers
 		/// </summary>
 		/// <param name="pageIndex">Index of the page.</param>
 		/// <param name="page">The page.</param>
-		protected virtual void PopulatePage(int pageIndex, IList<T> page)
+		protected virtual void PopulatePage(int pageIndex, IList<PoolSlot<T>> page)
 		{
 			Trace.WriteLine("Page populated: " + pageIndex);
 			if (_pages.ContainsKey(pageIndex))
@@ -457,21 +491,36 @@ namespace Core.Infrastructure.Helpers
 		{
 			if (!_pages.ContainsKey(pageIndex))
 			{
+				if (System.Threading.Interlocked.CompareExchange(ref _populatedPages, 5, 5) == 5)
+				{
+					List<int> keys = new List<int>(_pageTouchTimes.Keys);
+					//maybe it would be preferable to add in search criteria time search
+					int minIndx = keys.Where(x => x != 0 && x != _currentPageIndx).Min();
+
+					IList<PoolSlot<T>> slots = _pages[minIndx];
+					LogItemsPool pool = _container.Resolve<LogItemsPool>();
+					foreach (PoolSlot<T> slot in slots)
+						pool.Release(slot as PoolSlot<LogItem>);
+
+					_pages.Remove(minIndx);
+					_pageTouchTimes.Remove(minIndx);
+					System.Threading.Interlocked.Decrement(ref _populatedPages);
+				}
+
 				_pages.Add(pageIndex, null);
 				_pageTouchTimes.Add(pageIndex, DateTime.Now);
+				System.Threading.Interlocked.Increment(ref _populatedPages);
 				Trace.WriteLine("Added page: " + pageIndex);
 				LoadPage(pageIndex);
 			}
 			else
-			{
 				_pageTouchTimes[pageIndex] = DateTime.Now;
-			}
-		}
 
+			System.Threading.Interlocked.Exchange(ref _currentPageIndx, pageIndex);
+		}
 		#endregion Paging
 
 		#region Load methods
-
 		/// <summary>
 		/// Loads the count of items.
 		/// </summary>
@@ -488,17 +537,15 @@ namespace Core.Infrastructure.Helpers
 		{
 			PopulatePage(pageIndex, FetchPage(pageIndex));
 		}
-
 		#endregion Load methods
 
 		#region Fetch methods
-
 		/// <summary>
 		/// Fetches the requested page from the IItemsProvider.
 		/// </summary>
 		/// <param name="pageIndex">Index of the page.</param>
 		/// <returns></returns>
-		protected IList<T> FetchPage(int pageIndex)
+		protected IList<PoolSlot<T>> FetchPage(int pageIndex)
 		{
 			return ItemsProvider.FetchRange(pageIndex * PageSize, PageSize);
 		}
@@ -511,7 +558,33 @@ namespace Core.Infrastructure.Helpers
 		{
 			return ItemsProvider.FetchCount();
 		}
-
 		#endregion Fetch methods
+
+		public void Dispose()
+		{
+			this.Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		private void Dispose(bool disposing)
+		{
+			if (_isDisposed)
+				return;
+
+			List<int> keys = new List<int>(_pageTouchTimes.Keys);
+			foreach (int key in keys)
+			{
+				LogItemsPool pool = _container.Resolve<LogItemsPool>();
+				IList<PoolSlot<T>> slots = _pages[key];
+				_pages.Remove(key);
+				_pageTouchTimes.Remove(key);
+				foreach (PoolSlot<T> slot in slots)
+					pool.Release(slot as PoolSlot<LogItem>);
+				System.Threading.Interlocked.Decrement(ref _populatedPages);
+
+				Trace.WriteLine("Dsiposing " + key);
+			}
+			_isDisposed = true;
+		}
 	}
 }

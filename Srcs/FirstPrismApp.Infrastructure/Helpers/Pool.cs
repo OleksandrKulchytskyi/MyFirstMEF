@@ -15,6 +15,7 @@ namespace Core.Infrastructure.Helpers
 		/// concurrent stack object
 		/// </summary>
 		private readonly ConcurrentStack<PoolSlot<T>> _storage; // storing objects "in pool"
+
 		/// <summary>
 		/// lock free semaphore
 		/// </summary>
@@ -222,28 +223,6 @@ namespace Core.Infrastructure.Helpers
 
 		#endregion Pool operations
 
-		#region For overriding
-
-		/// <summary>
-		/// Initializes a new object, ready to be placed in the pool
-		/// </summary>
-		/// <returns>The initialized object</returns>
-		protected abstract T ObjectConstructor();
-
-		protected virtual void HoldSlotInObject(T @object, PoolSlot<T> slot)
-		{
-		}
-
-		/// <summary>
-		/// Provides clean up of the object before returning to the pool
-		/// </summary>
-		/// <param name="object">Objects</param>
-		protected virtual void CleanUp(T @object)
-		{
-		}
-
-		#endregion For overriding
-
 		#region Storage wrappers
 
 		private void Push(PoolSlot<T> slot)
@@ -266,5 +245,27 @@ namespace Core.Infrastructure.Helpers
 		}
 
 		#endregion Storage wrappers
+
+		#region For overriding
+
+		/// <summary>
+		/// Initializes a new object, ready to be placed in the pool
+		/// </summary>
+		/// <returns>The initialized object</returns>
+		protected abstract T ObjectConstructor();
+
+		protected virtual void HoldSlotInObject(T @object, PoolSlot<T> slot)
+		{
+		}
+
+		/// <summary>
+		/// Provides clean up of the object before returning to the pool
+		/// </summary>
+		/// <param name="object">Objects</param>
+		protected virtual void CleanUp(T @object)
+		{
+		}
+
+		#endregion For overriding
 	}
 }

@@ -21,7 +21,7 @@ namespace LogParsingModule
 			_container.RegisterType<IParsingService, LogParser>();
 
 			_container.RegisterType<LogItemsPool, LogItemsPool>(new ContainerControlledLifetimeManager(),
-				new InjectionConstructor(new InjectionParameter(typeof(int), 100)));
+				new InjectionConstructor(new InjectionParameter(typeof(int), 300)));
 			_container.RegisterType<IEntryContentService, EntryContentService>();
 			_container.RegisterType<IItemsProvider<LogItem>, LogEntriesProvider>();
 		}

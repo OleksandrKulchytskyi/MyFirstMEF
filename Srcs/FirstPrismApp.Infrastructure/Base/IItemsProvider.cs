@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Core.Infrastructure.Helpers;
+using System.Collections.Generic;
 
 namespace Core.Infrastructure.Base
 {
@@ -20,7 +21,7 @@ namespace Core.Infrastructure.Base
 		/// <param name="startIndex">The start index.</param>
 		/// <param name="count">The number of items to fetch.</param>
 		/// <returns></returns>
-		IList<T> FetchRange(int startIndex, int count);
+		IList<PoolSlot<T>> FetchRange(int startIndex, int count);
 
 		void SetSource(string fPath);
 	}

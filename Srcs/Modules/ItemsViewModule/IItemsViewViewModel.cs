@@ -7,7 +7,7 @@ namespace ItemsViewModule
 {
 	public interface IItemsViewViewModel : IViewModel
 	{
-		VirtualizingCollection<LogItem> VirtColl { get; set; }
+		VirtualizingCollection<LogItem> VirtColletion { get; set; }
 
 		//ObservableCollection<LogItem> Entries { get; set; }
 

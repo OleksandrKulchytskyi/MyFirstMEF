@@ -3,7 +3,6 @@ using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 

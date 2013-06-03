@@ -66,7 +66,7 @@ namespace ItemsViewModule
 
 		private VirtualizingCollection<LogItem> _VirtColl;
 
-		public VirtualizingCollection<LogItem> VirtColl
+		public VirtualizingCollection<LogItem> VirtColletion
 		{
 			get
 			{
@@ -77,7 +77,7 @@ namespace ItemsViewModule
 				if (_VirtColl != value)
 				{
 					_VirtColl = value;
-					RaisePropertyChanged("VirtColl");
+					RaisePropertyChanged("VirtColletion");
 				}
 			}
 		}
@@ -106,13 +106,19 @@ namespace ItemsViewModule
 			try
 			{
 				_container.Resolve<ILogger>().Log(LogSeverity.Info, string.Format("Begin load document: {0}", args.Path), null);
-				System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
+				System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(500));
 
 				IParsingService service = _container.Resolve<IParsingService>();
 
 				IItemsProvider<LogItem> itemsProvider = _container.Resolve<IItemsProvider<LogItem>>();
 				itemsProvider.SetSource(args.Path);
-				VirtColl = new VirtualizingCollection<LogItem>(itemsProvider);
+				if (VirtColletion != null)
+				{
+					VirtColletion.Dispose();
+					VirtColletion = null;
+				}
+				VirtColletion = new VirtualizingCollection<LogItem>(itemsProvider, _container);
+				//var item= VirtColletion[0];
 
 				//Entries = new ObservableCollection<LogItem>(service.ParseLog(args.Path));
 				_container.Resolve<IStateService>().AddToRecentAndSetCurrent(args.Path);
@@ -134,7 +140,11 @@ namespace ItemsViewModule
 			_container.Resolve<ILogger>().Log(LogSeverity.Info, string.Format("Begin document close operation: {0}", args.PathToDocument), null);
 
 			//Entries.Clear();
-			VirtColl.Clear();
+			if (VirtColletion != null)
+			{
+				VirtColletion.Dispose();
+				VirtColletion = null;
+			}
 
 			_container.Resolve<ICommandManager>().Refresh();
 		}

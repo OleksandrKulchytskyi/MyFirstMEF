@@ -37,7 +37,6 @@ namespace ItemsViewModule
 			if (disposed == 1) return;
 
 			disposed = 1;
-
 			_container = null;
 			_manager = null;
 		}

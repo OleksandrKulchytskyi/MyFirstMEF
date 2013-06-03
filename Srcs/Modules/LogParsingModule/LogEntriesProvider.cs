@@ -33,7 +33,6 @@ namespace LogParsingModule
 		{
 			if (_count == -1)
 				FetchInternal(out _items);
-
 			return _count;
 		}
 
@@ -76,12 +75,12 @@ namespace LogParsingModule
 			}//end using scope
 		}
 
-		public IList<LogItem> FetchRange(int startIndex, int count)
+		public IList<PoolSlot<LogItem>> FetchRange(int startIndex, int count)
 		{
 			return FetchChunk(startIndex, count);
 		}
 
-		private IList<LogItem> FetchChunk(int startIndx, int count)
+		private IList<PoolSlot<LogItem>> FetchChunk(int startIndx, int count)
 		{
 			if (_count == -1)//difence check
 				FetchInternal(out _items);
@@ -95,7 +94,7 @@ namespace LogParsingModule
 			IList<PoolSlot<LogItem>> slots = null;
 			List<LogItem> entries = null;
 
-			if (_poolWeak != null && _poolWeak.IsAlive != null)
+			if (_poolWeak != null && _poolWeak.IsAlive)
 				slots = _poolWeak.Target.TakeSlots(count);
 			else
 				entries = new List<LogItem>();
@@ -135,7 +134,7 @@ namespace LogParsingModule
 						break;
 				}
 			}//end using
-			return entries;
+			return slots;
 		}
 	}
 }
