@@ -27,7 +27,7 @@ namespace LogParsingModule
 
 			using (StreamReader sr = new StreamReader(file, true))
 			{
-				string line = sr.ReadLine(); ;
+				string line = sr.ReadLine();
 				int lineNumber = 1;
 				Severity severity = Severity.None;
 				bool found = false;
