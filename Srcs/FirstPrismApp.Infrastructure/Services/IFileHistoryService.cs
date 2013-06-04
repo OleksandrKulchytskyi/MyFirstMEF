@@ -20,6 +20,8 @@ namespace Core.Infrastructure.Services
 
 		void Clear();
 
+		void Reindex(bool updateAfterDone);
+
 		Task UpdateStorage();
 	}
 
@@ -33,6 +35,18 @@ namespace Core.Infrastructure.Services
 	[Serializable]
 	public class RecentEventArgs : EventArgs
 	{
+		public RecentEventArgs()
+			: base()
+		{
+		}
+
+		public RecentEventArgs(string item, RecentAction action)
+			: this()
+		{
+			Item = item;
+			Action = action;
+		}
+
 		public RecentAction Action { get; set; }
 
 		public string Item { get; set; }
@@ -62,7 +76,7 @@ namespace Core.Infrastructure.Services
 		private void OnRecentChanged(string item, RecentAction action)
 		{
 			if (_recentChanged != null)
-				_recentChanged(this, new RecentEventArgs { Action = action, Item = item });
+				_recentChanged(this, new RecentEventArgs(item, action));
 		}
 
 		public void InitializeFromFile()
@@ -111,6 +125,25 @@ namespace Core.Infrastructure.Services
 		public void Clear()
 		{
 			_container.Clear();
+		}
+
+		public void Reindex(bool updateAfterDone)
+		{
+			List<string> existed = new List<string>(_container.Count);
+			string item;
+			while (_container.TryPop(out item))
+			{
+				OnRecentChanged(item, RecentAction.Removed);
+				if (File.Exists(item))
+					existed.Add(item);
+			}
+			foreach(string file in existed)
+			{
+				_container.Push(file);
+				OnRecentChanged(file, RecentAction.Added);
+			}
+			if (updateAfterDone)
+				UpdateStorage();
 		}
 
 		public Task UpdateStorage()

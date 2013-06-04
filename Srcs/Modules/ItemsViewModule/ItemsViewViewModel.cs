@@ -107,8 +107,7 @@ namespace ItemsViewModule
 			{
 				_container.Resolve<ILogger>().Log(LogSeverity.Info, string.Format("Begin to load document: {0}", args.Path), null);
 				System.Threading.Thread.Sleep(TimeSpan.FromMilliseconds(500));
-
-				IParsingService service = _container.Resolve<IParsingService>();
+				//IParsingService service = _container.Resolve<IParsingService>();
 
 				IItemsProvider<LogItem> itemsProvider = _container.Resolve<IItemsProvider<LogItem>>();
 				itemsProvider.SetSource(args.Path);
@@ -118,11 +117,19 @@ namespace ItemsViewModule
 					VirtColletion = null;
 				}
 				VirtColletion = new VirtualizingCollection<LogItem>(itemsProvider, _container);
-				//var item= VirtColletion[0];
 
-				//Entries = new ObservableCollection<LogItem>(service.ParseLog(args.Path));
 				_container.Resolve<IStateService>().AddToRecentAndSetCurrent(args.Path);
 				_container.Resolve<ICommandManager>().Refresh();
+			}
+			catch (System.IO.FileNotFoundException ex)
+			{
+				_container.Resolve<ILogger>().Log(LogSeverity.Error, ex.Message, ex);
+				MessageBox.Show(Application.Current.MainWindow, ex.Message + "\n\r" + ex.FileName, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				if (MessageBox.Show(Application.Current.MainWindow, "Do you want to reindex MRU and remove unexisted?", string.Empty, MessageBoxButton.YesNo,
+						MessageBoxImage.Question) == MessageBoxResult.Yes)
+				{
+					_container.Resolve<IFileHistoryService>().Reindex(true);
+				}
 			}
 			catch (Exception ex)
 			{
@@ -138,7 +145,6 @@ namespace ItemsViewModule
 		private void OnClosingDocument(CloseDocumentEvent args)
 		{
 			_container.Resolve<ILogger>().Log(LogSeverity.Info, string.Format("Begin document close operation: {0}", args.PathToDocument), null);
-
 			//Entries.Clear();
 			if (VirtColletion != null)
 			{

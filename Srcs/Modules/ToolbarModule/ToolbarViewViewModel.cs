@@ -22,7 +22,11 @@ namespace ToolbarModule
 		public MenuItemViewModel MainMenu
 		{
 			get { return _menu; }
-			set { _menu = value; RaisePropertyChanged("Menus"); }
+			set
+			{
+				_menu = value;
+				RaisePropertyChanged("Menus");
+			}
 		}
 
 		public IList<AbstractCommandable> Menus

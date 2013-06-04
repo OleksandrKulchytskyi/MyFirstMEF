@@ -156,8 +156,9 @@ namespace MainApp
 
 		private void LoadMenus()
 		{
-			ICommandManager cmdManager = _weakCont.Get().Resolve<ICommandManager>();
-			AbstractMenuItem vm = _weakCont.Get().Resolve<AbstractMenuItem>();
+			IUnityContainer container = _weakCont.Get();
+			ICommandManager cmdManager = container.Resolve<ICommandManager>();
+			AbstractMenuItem vm = container.Resolve<AbstractMenuItem>();
 
 			vm.Add(new MenuItemViewModel("_File", 1));
 
@@ -165,13 +166,13 @@ namespace MainApp
 														cmdManager.GetCommand("OPEN"), new KeyGesture(Key.O, ModifierKeys.Control, "Ctrl + O"))));
 			vm.Get("_File").Add((new MenuItemViewModel("_Close", 2, null, cmdManager.GetCommand("CLOSE"),
 																		new KeyGesture(Key.F4, ModifierKeys.Control, "Ctrl + F4"))));
-			vm.Get("_File").Add(new RecentMenuItemViewModel("Recent", 3, _weakCont.Get()));
+			vm.Get("_File").Add(new RecentMenuItemViewModel("Recent", 3, container));
 			vm.Get("_File").Add(MenuItemViewModel.Separator(3));
 			vm.Get("_File").Add(new MenuItemViewModel("_Exit", 4, null, cmdManager.GetCommand("EXIT"), new KeyGesture(Key.F4, ModifierKeys.Alt, "Alt + F4"),
-													false, _weakCont.Get()));
+													false, container));
 
 			//added for proper recent file loading and displaying features.
-			_weakCont.Get().Resolve<IFileHistoryService>().InitializeFromFile();
+			container.Resolve<IFileHistoryService>().InitializeFromFile();
 
 			vm.Add(new MenuItemViewModel("_View", 2));
 			vm.Get("_View").Add((new MenuItemViewModel("_Full view", 1, null, cmdManager.GetCommand("VIEWFULL"),
