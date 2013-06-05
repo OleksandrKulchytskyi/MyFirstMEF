@@ -98,6 +98,7 @@
     <Compile Include="Helpers\Pool.cs" />
     <Compile Include="Helpers\PoolEx.cs" />
     <Compile Include="Helpers\PoolSlot.cs" />
+    <Compile Include="Helpers\SplitableList.cs" />
     <Compile Include="Helpers\VirtualizingCollection.cs" />
     <Compile Include="Helpers\LogItemsPool.cs" />
     <Compile Include="Helpers\WeakEventHandlerAdvanced.cs" />
