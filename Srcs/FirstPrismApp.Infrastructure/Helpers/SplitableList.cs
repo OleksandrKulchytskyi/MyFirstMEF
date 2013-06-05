@@ -110,6 +110,12 @@ namespace Core.Infrastructure.Helpers
 				return default(TItem);
 			}
 
+			public void SetFromGlobalIndx(int index, TItem val)
+			{
+				if (IsInRange(index))
+					this[index - _fromIndx] = val;
+			}
+
 			public bool IsInRange(int index)
 			{
 				return ((index >= _fromIndx) && (index <= (_fromIndx + _threshold - 1)));
@@ -214,6 +220,24 @@ namespace Core.Infrastructure.Helpers
 			}
 
 			return items;
+		}
+
+		public T this[int indx]
+		{
+			get
+			{
+				if (indx < 0 || indx >= Count)
+					throw new IndexOutOfRangeException();
+				int bucketIndx = GetBucketIndxForElementIndex(indx);
+				return _buckets[bucketIndx].GetFromGlobalIndx(indx);
+			}
+			set
+			{
+				if (indx < 0 || indx >= Count)
+					throw new IndexOutOfRangeException();
+				int bucketIndx = GetBucketIndxForElementIndex(indx);
+				_buckets[bucketIndx].SetFromGlobalIndx(indx, value);
+			}
 		}
 
 		private int GetBucketIndxForElementIndex(int index)
