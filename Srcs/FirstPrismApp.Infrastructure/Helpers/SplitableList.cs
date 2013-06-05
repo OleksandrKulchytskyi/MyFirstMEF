@@ -17,7 +17,7 @@ namespace Core.Infrastructure.Helpers
 
 			public BucketSlot()
 			{
-				_currIndx = 0;
+				_currIndx = -1;
 				_bucket = new TItem[_threshold];
 			}
 
@@ -35,7 +35,7 @@ namespace Core.Infrastructure.Helpers
 				}
 			}
 
-			public int CurrentOveralPointerIndex
+			public int CurrentGlobalPointerIndex
 			{
 				get
 				{
@@ -43,19 +43,11 @@ namespace Core.Infrastructure.Helpers
 				}
 			}
 
-			public int FromOverallIndex
+			public int FromGlobalIndex
 			{
 				get
 				{
 					return _fromIndx;
-				}
-			}
-
-			public bool CanAdd
-			{
-				get
-				{
-					return (_threshold != _currIndx);
 				}
 			}
 
@@ -83,12 +75,19 @@ namespace Core.Infrastructure.Helpers
 				}
 			}
 
+			public bool CanAdd
+			{
+				get
+				{
+					return (_currIndx < (_threshold - 1));
+				}
+			}
+
 			public void Add(TItem item)
 			{
 				if (!CanAdd)
-					throw new InvalidOperationException("Bucket is full.");
-				_bucket[_currIndx] = item;
-				Interlocked.Increment(ref _currIndx);
+					throw new InvalidOperationException("Bucket is full.Adding feature is unvaliable.");
+				_bucket[Interlocked.Increment(ref _currIndx)] = item;
 			}
 
 			public IEnumerator<TItem> GetEnumerator()
@@ -106,14 +105,14 @@ namespace Core.Infrastructure.Helpers
 
 			public TItem GetFromGlobalIndx(int index)
 			{
-				if (IsinRange(index))
+				if (IsInRange(index))
 					return this[index - _fromIndx];
 				return default(TItem);
 			}
 
-			public bool IsinRange(int index)
+			public bool IsInRange(int index)
 			{
-				return ((index >= _fromIndx) && (index <= _fromIndx + _threshold));
+				return ((index >= _fromIndx) && (index <= (_fromIndx + _threshold - 1)));
 			}
 		}
 
@@ -121,7 +120,7 @@ namespace Core.Infrastructure.Helpers
 		private readonly int _bucketCount;
 		private List<BucketSlot<T>> _buckets;
 		int _currentBucket = 0;
-		int _currentIndx = 0;
+		int _currentIndx = -1;
 
 		public SplitableList()
 		{
@@ -152,7 +151,8 @@ namespace Core.Infrastructure.Helpers
 		public void Add(T item)
 		{
 		Begin:
-			if (_buckets[_currentBucket] == null) _buckets[_currentBucket] = new BucketSlot<T>(_currentIndx);
+			if (_buckets[_currentBucket] == null)
+				_buckets[_currentBucket] = new BucketSlot<T>(_currentIndx == -1 ? ++_currentIndx : _currentIndx);
 
 			if (_buckets[_currentBucket].CanAdd)
 			{
@@ -164,8 +164,7 @@ namespace Core.Infrastructure.Helpers
 				if (_buckets.Count == _currentBucket + 1)
 				{
 					_buckets.Add(new BucketSlot<T>(_currentIndx));
-					Interlocked.Increment(ref _currentBucket);
-					_buckets[_currentBucket].Add(item);
+					_buckets[Interlocked.Increment(ref _currentBucket)].Add(item);
 					Interlocked.Increment(ref _currentIndx);
 				}
 				else
@@ -178,10 +177,7 @@ namespace Core.Infrastructure.Helpers
 
 		public int Count
 		{
-			get
-			{
-				return (_currentIndx + 1);
-			}
+			get { return (_currentIndx + 1); }
 		}
 
 		public IEnumerator<T> GetEnumerator()
@@ -194,22 +190,22 @@ namespace Core.Infrastructure.Helpers
 			return _buckets.GetEnumerator();
 		}
 
-		public List<T> GetRange(int fromIndex, int count)
+		public List<T> GetRange(int fromIndx, int count)
 		{
-			if (Count < (fromIndex + count))
+			if (Count < (fromIndx + count))
 				throw new InvalidOperationException("Fail to retrieve such items.");
 
 			List<T> items = new List<T>(count);
 			bool stop = false;
-			int curIndex = fromIndex;
-			int fromBucket = GetBucketIndxForElementIndex(fromIndex);
+			int currentIndx = fromIndx;
+			int fromBucket = GetBucketIndxForElementIndex(fromIndx);
 			for (int i = fromBucket; i <= _bucketCount && !stop; i++)
 			{
-				while (_buckets[i].IsinRange(curIndex))
+				while (_buckets[i].IsInRange(currentIndx))
 				{
-					items.Add(_buckets[i].GetFromGlobalIndx(curIndex));
-					curIndex++;
-					if ((curIndex - fromIndex) == count)
+					items.Add(_buckets[i].GetFromGlobalIndx(currentIndx));
+					currentIndx++;
+					if ((currentIndx - fromIndx) == count)
 					{
 						stop = true;
 						break;
@@ -224,10 +220,9 @@ namespace Core.Infrastructure.Helpers
 		{
 			for (int i = 0; i < _buckets.Count; i++)
 			{
-				if (_buckets[i].FromOverallIndex >= index && index <= (_buckets[i].FromOverallIndex + _bucketCount))
-				{
+				if (index >= _buckets[i].FromGlobalIndex &&
+					index <= (_buckets[i].FromGlobalIndex + (_bucketCount - 1)))
 					return i;
-				}
 			}
 			throw new IndexOutOfRangeException();
 		}
