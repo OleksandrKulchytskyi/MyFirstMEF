@@ -13,7 +13,6 @@ namespace LogParsingModule
 		private string _fPath;
 		private int _count;
 		private SplitableList<int> _indexes;
-		private IList<int> _items;
 		private GenericWeakReference<LogItemsPool> _poolWeak;
 
 		[InjectionConstructor()]
@@ -33,8 +32,7 @@ namespace LogParsingModule
 		public int FetchCount()
 		{
 			if (_count == -1)
-				FetchInternal(out _items);
-			//FetchInternal2(out _indexes);
+				FetchInternal(out _indexes);
 			return _count;
 		}
 
@@ -43,41 +41,7 @@ namespace LogParsingModule
 			_fPath = filePath;
 		}
 
-		private void FetchInternal(out IList<int> items)
-		{
-			if (!File.Exists(_fPath))
-				throw new FileNotFoundException("File wasn't found.", _fPath);
-
-			items = new List<int>();
-			using (StreamReader sr = new StreamReader(_fPath, true))
-			{
-				string line = null;
-				int lineNumber = 0;
-				Severity severity = Severity.None;
-				bool found = false;
-				_count = 0;
-				while ((line = sr.ReadLine()) != null)
-				{
-					lineNumber++;
-
-					if (string.IsNullOrEmpty(line)) continue;
-
-					if (found && !LogParser.IsMessageBegin(line, out severity)) continue;
-
-					else if (found && LogParser.IsMessageBegin(line, out severity))
-						found = false;
-
-					found = LogParser.IsMessageBegin(line, out severity);
-					if (found)
-					{
-						items.Add(lineNumber);
-						_count++;
-					}
-				}//end while
-			}//end using scope
-		}
-
-		private void FetchInternal2(out SplitableList<int> items)
+		private void FetchInternal(out SplitableList<int> items)
 		{
 			if (!File.Exists(_fPath))
 				throw new FileNotFoundException("File wasn't found.", _fPath);
@@ -119,8 +83,7 @@ namespace LogParsingModule
 		private IList<PoolSlot<LogItem>> FetchChunk(int startIndx, int count)
 		{
 			if (_count == -1)//difensive check in case when FetchCount method wasn't invoked
-				//FetchInternal2(out _indexes);
-				FetchInternal(out _items);
+				FetchInternal(out _indexes);
 
 			if (startIndx < 0)
 				throw new IndexOutOfRangeException("startIndx parameter must be equals or great than zero.");
@@ -139,8 +102,7 @@ namespace LogParsingModule
 				Severity severity = Severity.None;
 				bool found = false;
 				int retrieved = 0;
-				//int atPos = _indexes[startIndx];
-				int atPos = _items[startIndx];
+				int atPos = _indexes[startIndx];
 				while ((lineNumber != (atPos == 0 ? atPos : atPos - 1)) && ((line = sr.ReadLine()) != null))//skip first lines if startIndex > 0
 					lineNumber++;
 
